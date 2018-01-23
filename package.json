@@ -1,0 +1,30 @@
+{
+  "name": "node-socket-seed",
+  "version": "0.1.0",
+  "description": "NodeJS and Socket.io seed project",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "test": "TEST_MODE=true ./node_modules/.bin/mocha --reporter spec"
+  },
+  "keywords": [
+    "node",
+    "socket-io",
+    "express",
+    "jquery"
+  ],
+  "author": "Nafeu Nasir",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.4.2"
+  }
+}
