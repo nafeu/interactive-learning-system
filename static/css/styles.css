@@ -102,7 +102,7 @@ body {
   border-left: 5px solid #ecf0f1;
 }
 
-.instructor-button {
+.instructor-button, .attendee-button {
   width: 100%;
   font-size: 2em;
   text-align: center;
@@ -111,10 +111,10 @@ body {
   border: 1px solid #ecf0f1;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color ease-in-out 500ms;
+  transition: background-color ease-in-out 200ms;
 }
 
-.instructor-button:active {
+.instructor-button:active, .attendee-button:active {
   background-color: #ecf0f1;
   color: white;
 }
@@ -126,6 +126,11 @@ body {
 #command-log {
   font-size: 1.5em;
   margin: 5px;
+}
+
+.attendee-textfield {
+  width: 100%;
+  font-size: 1.5em;
 }
 
 /* ==========================================================================
