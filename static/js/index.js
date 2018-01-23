@@ -1,5 +1,6 @@
 var socket = io({'reconnection': false});
 var url = '../assets/example.pdf';
+var publicComments, interaction;
 
 socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
@@ -21,6 +22,10 @@ socket.on('down-scale', function(){
   handleDownScale();
 })
 
+socket.on('publicize-comment', function(data){
+  handlePublicizeComment(data);
+})
+
 // The workerSrc property shall be specified.
 // PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
@@ -29,7 +34,8 @@ var pdfDoc = null,
     pageRendering = false,
     pageNumPending = null,
     scale = 1,
-    scaleLimit = 3,
+    scaleUpperLimit = 3,
+    scaleLowerLimit = 0.5,
     scaleIncrement = 0.1,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d');
@@ -91,7 +97,7 @@ function handleNextPage() {
 }
 
 function handleDownScale() {
-  if (scale <= 1) {
+  if (scale <= scaleLowerLimit) {
     return;
   }
   scale -= scaleIncrement;
@@ -99,11 +105,18 @@ function handleDownScale() {
 }
 
 function handleUpScale() {
-  if (scale >= scaleLimit) {
+  if (scale >= scaleUpperLimit) {
     return;
   }
   scale += scaleIncrement;
   queueRenderPage(pageNum);
+}
+
+function handlePublicizeComment(comment) {
+  var out = $("<div>", {class: "public-comment"}).text(comment);
+  var hr = $("<hr>");
+  publicComments.append(hr);
+  publicComments.append(out);
 }
 
 PDFJS.getDocument(url).then(function(pdfDoc_) {
@@ -115,7 +128,8 @@ PDFJS.getDocument(url).then(function(pdfDoc_) {
 $(document).ready(function(){
 
   // DOM References
-  var interaction = $("#interaction");
+  interaction = $("#interaction");
+  publicComments = $("#public-comments");
 
   // DOM Events
   $(window).resize(function(){

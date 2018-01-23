@@ -102,7 +102,7 @@ body {
   border-left: 5px solid #ecf0f1;
 }
 
-.instructor-button, .attendee-button {
+.instructor-button, .attendee-button, .comment-submit-button {
   width: 100%;
   font-size: 2em;
   text-align: center;
@@ -114,7 +114,7 @@ body {
   transition: background-color ease-in-out 200ms;
 }
 
-.instructor-button:active, .attendee-button:active {
+.instructor-button:active, .attendee-button:active, .comment-submit-button:active {
   background-color: #ecf0f1;
   color: white;
 }
@@ -131,6 +131,10 @@ body {
 .attendee-textfield {
   width: 100%;
   font-size: 1.5em;
+}
+
+.unapproved-comment {
+  cursor: pointer;
 }
 
 /* ==========================================================================

@@ -5,7 +5,10 @@
   <% include ../partials/head %>
 </head>
 <body>
-  <textarea class="attendee-textfield" id="question" type="text" placeholder="Add your comments here..."></textarea>
+  <textarea class="attendee-textfield" id="attendee-comment" type="text" placeholder="Add your comments here..."></textarea>
+  <div class="comment-submit-button" onclick="submitComment()">
+    Submit Comment
+  </div>
   <div id="attendee-button-container">
     <div class="attendee-button" onclick="sendMultipleChoiceResponse('A')">A</div>
     <div class="attendee-button" onclick="sendMultipleChoiceResponse('B')">B</div>

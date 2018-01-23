@@ -1,7 +1,8 @@
 var socket = io({'reconnection': false});
 var url = '../assets/example.pdf';
 var attendeeButtonContainer,
-    attendeeSubmission;
+    attendeeSubmission,
+    attendeeComment;
 
 socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
@@ -16,7 +17,7 @@ $(document).ready(function(){
 
   attendeeButtonContainer = $("#attendee-button-container");
   attendeeSubmission = $("#attendee-submission");
-
+  attendeeComment = $("#attendee-comment");
 })
 
 function sendMultipleChoiceResponse(choice) {
@@ -30,6 +31,7 @@ function resetMultipleChoiceResponses() {
   attendeeButtonContainer.show();
 }
 
-function submitComment(comment) {
-  socket.emit('attendee-comment', comment);
+function submitComment() {
+  socket.emit('attendee-comment', attendeeComment.val());
+  attendeeComment.val("");
 }

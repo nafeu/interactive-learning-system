@@ -1,8 +1,17 @@
 var socket = io({'reconnection': false});
+var body, unapprovedComments, approvedComments;
+
+// Handlers
 
 socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
-})
+});
+
+socket.on('new-comment', function(data){
+  insertNewComment(data);
+});
+
+// Emitters & Helpers
 
 function nextPage() {
   socket.emit('instruction', {
@@ -38,10 +47,33 @@ function logCommand(command) {
   $("#command-log").text("You pressed " + command + " at " + utcDate);
 }
 
+function insertNewComment(comment) {
+  var out = $("<div>", {
+    class: "unapproved-comment",
+    onclick: "approveComment(this);"
+  })
+    .text(comment);
+  unapprovedComments.append(out);
+}
+
+function approveComment(element) {
+  var ref = $(element);
+  socket.emit('instruction', {
+    command: "approve-comment",
+    comment: ref.text(),
+  });
+  ref.css({
+    "background-color": "green",
+    "color": "white",
+  });
+}
+
 $(document).ready(function(){
   console.log("Connected as instructor...");
 
-  var body = $("body");
+  body = $("body");
+  unapprovedComments = $("#unapproved-comments");
+  approvedComments = $("#approved-comments");
   body.keydown(function(event){
 
     if (event.which == "221") // "]"

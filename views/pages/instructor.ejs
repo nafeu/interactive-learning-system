@@ -5,11 +5,20 @@
   <% include ../partials/head %>
 </head>
 <body>
+  <h2>Slide Control</h2>
   <div class="instructor-button" onclick="nextPage()">Next</div>
   <div class="instructor-button" onclick="prevPage()">Prev</div>
   <div class="instructor-button" onclick="upScale()">Zoom In</div>
   <div class="instructor-button" onclick="downScale()">Zoom Out</div>
   <div id="command-log"></div>
+  <hr>
+  <h2>Comments</h2>
+  <div id="unapproved-comments">
+
+  </div>
+  <div id="approved-comments">
+
+  </div>
   <script src="js/instructor.js"></script>
 </body>
 </html>
