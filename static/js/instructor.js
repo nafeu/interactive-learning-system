@@ -68,6 +68,12 @@ function approveComment(element) {
   });
 }
 
+function clearComments() {
+  socket.emit('instruction', {
+    command: "clear-comments"
+  });
+}
+
 $(document).ready(function(){
   console.log("Connected as instructor...");
 

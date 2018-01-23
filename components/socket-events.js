@@ -22,7 +22,6 @@ module.exports = {
         console.log(`[ socket-events.js ] recieved instruction: ${data.command}`)
         switch (data.command) {
           case "approve-comment":
-            console.log("emitting approved comment: ", data.comment);
             io.emit('publicize-comment', data.comment);
             break;
           default:

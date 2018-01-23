@@ -22,6 +22,10 @@ socket.on('down-scale', function(){
   handleDownScale();
 })
 
+socket.on('clear-comments', function(){
+  handleClearComments();
+})
+
 socket.on('publicize-comment', function(data){
   handlePublicizeComment(data);
 })
@@ -117,6 +121,10 @@ function handlePublicizeComment(comment) {
   var hr = $("<hr>");
   publicComments.append(hr);
   publicComments.append(out);
+}
+
+function handleClearComments() {
+  publicComments.empty();
 }
 
 PDFJS.getDocument(url).then(function(pdfDoc_) {

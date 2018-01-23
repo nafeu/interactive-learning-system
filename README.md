@@ -1,8 +1,6 @@
-# Node Socket Seed
+# Syntactique Live (Demo)
 
 A starting point for basic Node.js/Express.js applications that use Socket.io and a simple Express API
-
-[![Build Status](https://travis-ci.org/nafeu/node-socket-seed.svg?branch=master)](https://travis-ci.org/nafeu/node-socket-seed)
 
 ### Requirements
 
