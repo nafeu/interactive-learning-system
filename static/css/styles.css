@@ -128,9 +128,13 @@ body {
   margin: 5px;
 }
 
-.attendee-textfield {
+.attendee-textfield, #attendee-name {
   width: 100%;
   font-size: 1.5em;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin: 5px;
 }
 
 .unapproved-comment {
@@ -141,6 +145,15 @@ body {
   border-radius: 5px;
   margin: 5px;
   background-color: #3498db;
+}
+
+.public-comment {
+  font-size: 1.5em;
+  padding: 10px;
+  border: 1px solid #95a5a6;
+  border-radius: 5px;
+  margin: 5px;
+  margin-top: 10px;
 }
 
 /* ==========================================================================

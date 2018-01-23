@@ -2,7 +2,8 @@ var socket = io({'reconnection': false});
 var url = '../assets/example.pdf';
 var attendeeButtonContainer,
     attendeeSubmission,
-    attendeeComment;
+    attendeeComment,
+    attendeeName;
 
 socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
@@ -18,6 +19,7 @@ $(document).ready(function(){
   attendeeButtonContainer = $("#attendee-button-container");
   attendeeSubmission = $("#attendee-submission");
   attendeeComment = $("#attendee-comment");
+  attendeeName = $("#attendee-name");
 })
 
 function sendMultipleChoiceResponse(choice) {
@@ -32,6 +34,16 @@ function resetMultipleChoiceResponses() {
 }
 
 function submitComment() {
-  socket.emit('attendee-comment', attendeeComment.val());
-  attendeeComment.val("");
+  var name = attendeeName.val();
+  var comment = attendeeComment.val();
+  if (comment.length > 0) {
+    var commentString = name + ": " + comment;
+    if (name.length < 1) {
+      commentString = comment;
+    }
+    socket.emit('attendee-comment', commentString);
+    attendeeComment.val("");
+  } else {
+    attendeeComment.focus();
+  }
 }

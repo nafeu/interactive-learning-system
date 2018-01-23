@@ -118,8 +118,6 @@ function handleUpScale() {
 
 function handlePublicizeComment(comment) {
   var out = $("<div>", {class: "public-comment"}).text(comment);
-  var hr = $("<hr>");
-  publicComments.append(hr);
   publicComments.append(out);
 }
 
