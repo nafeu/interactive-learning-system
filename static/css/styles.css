@@ -102,8 +102,30 @@ body {
   border-left: 5px solid #ecf0f1;
 }
 
+.instructor-button {
+  width: 100%;
+  font-size: 2em;
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ecf0f1;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color ease-in-out 500ms;
+}
+
+.instructor-button:active {
+  background-color: #ecf0f1;
+  color: white;
+}
+
 #presentation {
   overflow: hidden;
+}
+
+#command-log {
+  font-size: 1.5em;
+  margin: 5px;
 }
 
 /* ==========================================================================

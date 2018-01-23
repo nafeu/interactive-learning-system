@@ -5,10 +5,11 @@
   <% include ../partials/head %>
 </head>
 <body>
-  <button onclick="nextPage()">Next</button>
-  <button onclick="prevPage()">Prev</button>
-  <button onclick="upScale()">Zoom In</button>
-  <button onclick="downScale()">Zoom Out</button>
+  <div class="instructor-button" onclick="nextPage()">Next</div>
+  <div class="instructor-button" onclick="prevPage()">Prev</div>
+  <div class="instructor-button" onclick="upScale()">Zoom In</div>
+  <div class="instructor-button" onclick="downScale()">Zoom Out</div>
+  <div id="command-log"></div>
   <script src="js/instructor.js"></script>
 </body>
 </html>
