@@ -63,7 +63,7 @@ function approveComment(element) {
     comment: ref.text(),
   });
   ref.css({
-    "background-color": "green",
+    "background-color": "#2ecc71",
     "color": "white",
   });
 }
@@ -71,6 +71,9 @@ function approveComment(element) {
 function clearComments() {
   socket.emit('instruction', {
     command: "clear-comments"
+  });
+  $(".unapproved-comment").css({
+    "background-color": "#3498db"
   });
 }
 
