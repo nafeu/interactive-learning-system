@@ -98,6 +98,14 @@ body {
   text-align: center;
 }
 
+#interaction {
+  border-left: 5px solid #ecf0f1;
+}
+
+#presentation {
+  overflow: hidden;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

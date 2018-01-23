@@ -13,6 +13,14 @@ socket.on('prev-page', function(){
   handlePrevPage();
 })
 
+socket.on('up-scale', function(){
+  handleUpScale();
+})
+
+socket.on('down-scale', function(){
+  handleDownScale();
+})
+
 // The workerSrc property shall be specified.
 // PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
@@ -21,6 +29,8 @@ var pdfDoc = null,
     pageRendering = false,
     pageNumPending = null,
     scale = 1,
+    scaleLimit = 3,
+    scaleIncrement = 0.1,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d');
 
@@ -80,8 +90,39 @@ function handleNextPage() {
   queueRenderPage(pageNum);
 }
 
+function handleDownScale() {
+  if (scale <= 1) {
+    return;
+  }
+  scale -= scaleIncrement;
+  queueRenderPage(pageNum);
+}
+
+function handleUpScale() {
+  if (scale >= scaleLimit) {
+    return;
+  }
+  scale += scaleIncrement;
+  queueRenderPage(pageNum);
+}
+
 PDFJS.getDocument(url).then(function(pdfDoc_) {
   pdfDoc = pdfDoc_;
 
   renderPage(pageNum);
+});
+
+$(document).ready(function(){
+
+  // DOM References
+  var interaction = $("#interaction");
+
+  // DOM Events
+  $(window).resize(function(){
+    interaction.css('height', $(window).height());
+  });
+
+  // main()
+  interaction.css('height', $(window).height());
+
 });

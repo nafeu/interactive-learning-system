@@ -16,6 +16,18 @@ function prevPage() {
   });
 }
 
+function upScale() {
+  socket.emit('instruction', {
+    command: "up-scale",
+  });
+}
+
+function downScale() {
+  socket.emit('instruction', {
+    command: "down-scale",
+  });
+}
+
 $(document).ready(function(){
   console.log("Connected as instructor...");
 })
