@@ -1,4 +1,9 @@
-var socket = io({'reconnection': true});
+var socket = io({
+  'reconnection': true,
+  'reconnectionDelay': 100,
+  'reconnectionAttempts': 50
+});
+
 var url = '../assets/example.pdf';
 var attendeeButtonContainer,
     attendeeSubmission,
@@ -13,13 +18,26 @@ socket.on('new-question', function(){
   resetMultipleChoiceResponses();
 })
 
+socket.on('disconnect', function(){
+  confirm("You lost connection, please refresh page to interact again...");
+})
+
 $(document).ready(function(){
+
   console.log("Connected as attendee...");
 
   attendeeButtonContainer = $("#attendee-button-container");
   attendeeSubmission = $("#attendee-submission");
   attendeeComment = $("#attendee-comment");
   attendeeName = $("#attendee-name");
+
+  if (window.localStorage.getItem("attendee-name")) {
+    attendeeName.val(window.localStorage.getItem("attendee-name"));
+  }
+  attendeeName.change(function(){
+    window.localStorage.setItem("attendee-name", attendeeName.val());
+  })
+
 })
 
 function sendMultipleChoiceResponse(choice) {

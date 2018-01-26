@@ -1,4 +1,13 @@
-var socket = io({'reconnection': true});
+var socket = io({
+  'reconnection': true,
+  'reconnectionDelay': 100,
+  'reconnectionAttempts': 50
+});
+
+socket.on('disconnect', function(){
+  confirm("You lost connection, please refresh page to interact again...");
+})
+
 var url = '../assets/example.pdf';
 var publicComments, interaction;
 
