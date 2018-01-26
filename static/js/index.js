@@ -39,6 +39,14 @@ socket.on('publicize-comment', function(data){
   handlePublicizeComment(data);
 })
 
+socket.on('scroll-up', function(){
+  handleScrollUp();
+})
+
+socket.on('scroll-down', function(){
+  handleScrollDown();
+})
+
 // The workerSrc property shall be specified.
 // PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
@@ -127,11 +135,20 @@ function handleUpScale() {
 
 function handlePublicizeComment(comment) {
   var out = $("<div>", {class: "public-comment"}).text(comment);
-  publicComments.append(out);
+  interaction.append(out);
+  interaction.scrollTop(interaction[0].scrollHeight);
 }
 
 function handleClearComments() {
-  publicComments.empty();
+  interaction.empty();
+}
+
+function handleScrollDown() {
+  interaction.scrollTop(interaction.scrollTop() + 100);
+}
+
+function handleScrollUp() {
+  interaction.scrollTop(interaction.scrollTop() - 100);
 }
 
 PDFJS.getDocument(url).then(function(pdfDoc_) {
@@ -144,7 +161,6 @@ $(document).ready(function(){
 
   // DOM References
   interaction = $("#interaction");
-  publicComments = $("#public-comments");
 
   // DOM Events
   $(window).resize(function(){

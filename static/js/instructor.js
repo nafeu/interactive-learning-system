@@ -50,6 +50,20 @@ function downScale() {
   logCommand("down-scale");
 }
 
+function scrollUp() {
+  socket.emit('instruction', {
+    command: "scroll-up",
+  });
+  logCommand("scroll-up");
+}
+
+function scrollDown() {
+  socket.emit('instruction', {
+    command: "scroll-down",
+  });
+  logCommand("scroll-down");
+}
+
 function logCommand(command) {
   var dt = new Date();
   var utcDate = dt.toUTCString();
@@ -78,12 +92,12 @@ function approveComment(element) {
 }
 
 function clearComments() {
-  socket.emit('instruction', {
-    command: "clear-comments"
-  });
-  $(".unapproved-comment").css({
-    "background-color": "#3498db"
-  });
+  if (confirm("Clear all comments?")) {
+    socket.emit('instruction', {
+      command: "clear-comments"
+    });
+    $(".unapproved-comment").remove();
+  }
 }
 
 $(document).ready(function(){

@@ -99,7 +99,9 @@ body {
 }
 
 #interaction {
-  border-left: 5px solid #ecf0f1;
+  overflow: auto;
+  background-color: #112333;
+  color: white;
 }
 
 .instructor-button, .attendee-button, .comment-submit-button {
@@ -112,6 +114,10 @@ body {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color ease-in-out 200ms;
+}
+
+.instructor-button {
+  font-size: 3em;
 }
 
 .instructor-button:active, .attendee-button:active, .comment-submit-button:active {
@@ -150,10 +156,12 @@ body {
 .public-comment {
   font-size: 1.5em;
   padding: 10px;
-  border: 1px solid #95a5a6;
+  border: 1px solid #ecf0f1;
   border-radius: 5px;
   margin: 5px;
   margin-top: 10px;
+  color: white;
+  display: inline-block;
 }
 
 /* ==========================================================================
