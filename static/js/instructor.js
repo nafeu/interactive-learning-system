@@ -1,4 +1,4 @@
-var socket = io({'reconnection': false});
+var socket = io({'reconnection': true});
 var body, unapprovedComments, approvedComments;
 
 // Handlers

@@ -1,4 +1,4 @@
-var socket = io({'reconnection': false});
+var socket = io({'reconnection': true});
 var url = '../assets/example.pdf';
 var publicComments, interaction;
 
