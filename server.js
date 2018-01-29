@@ -1,3 +1,4 @@
+const appState = {}
 const express = require('express')
 const path = require('path')
 const app = express()
@@ -5,21 +6,12 @@ const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
-const api = require('./components/api')(io)
+const api = require('./components/api')(io, appState)
 const socketEvents = require('./components/socket-events')
 
 // ---------------------------------------------------------------------------
 // Configuration
 // ---------------------------------------------------------------------------
-
-let config
-
-try {
-  config = require('./config');
-} catch (err) {
-  console.log('[ server.js ] Missing config file')
-  config = {};
-}
 
 // Environment configs
 const env = process.env.NODE_ENV || 'dev';
@@ -33,7 +25,7 @@ let serverPort
 if (process.env.TEST_MODE) {
   serverPort = 8080
 } else {
-  serverPort = config.SERVER_PORT || 8000
+  serverPort = 8000
 }
 
 server.listen(process.env.PORT || serverPort, () => {
@@ -52,7 +44,7 @@ app.set('view engine', 'ejs')
 app.use('/api', api)
 
 app.get('/', function(req, res) {
-  res.render('pages/index');
+  res.render('pages/viewer');
 });
 
 app.get('/instructor', function(req, res) {

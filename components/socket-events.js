@@ -4,7 +4,7 @@
 
 module.exports = {
 
-  "use": (io) => {
+  "use": (io, appState) => {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})
@@ -13,21 +13,6 @@ module.exports = {
       socket.on('disconnect', () => {
         console.log(`[ socket-events.js ] ${socket.id} disconnected...`)
       });
-
-      socket.on('attendee-comment', (data) => {
-        io.emit("new-comment", data);
-      })
-
-      socket.on('instruction', (data) => {
-        console.log(`[ socket-events.js ] recieved instruction: ${data.command}`)
-        switch (data.command) {
-          case "approve-comment":
-            io.emit('publicize-comment', data.comment);
-            break;
-          default:
-            io.emit(data.command);
-        }
-      })
 
     });
   }

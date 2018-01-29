@@ -5,7 +5,7 @@ const router = express.Router()
 // Express API
 // ---------------------------------------------------------------------------
 
-module.exports = (io) => {
+module.exports = (io, appState) => {
 
   router.use((req, res, next) => {
     const time = new Date().toTimeString()
