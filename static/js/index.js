@@ -161,6 +161,7 @@ $(document).ready(function(){
 
   // DOM References
   interaction = $("#interaction");
+  body = $("body");
 
   // DOM Events
   $(window).resize(function(){
@@ -169,5 +170,35 @@ $(document).ready(function(){
 
   // main()
   interaction.css('height', $(window).height());
+  body.keydown(function(event){
+
+    if (event.which == "39") // "right"
+    {
+      handleNextPage();
+    }
+
+    if (event.which == "37") // "left"
+    {
+      handlePrevPage();
+    }
+
+    if (event.which == "187") // "+"
+    {
+      handleUpScale();
+    }
+
+    if (event.which == "189") // "-"
+    {
+      handleDownScale();
+    }
+
+    if (event.which == "38") {
+      handleScrollUp();
+    }
+
+    if (event.which == "40") {
+      handleScrollDown();
+    }
+  })
 
 });

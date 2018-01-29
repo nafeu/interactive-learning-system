@@ -20,6 +20,10 @@ socket.on('new-comment', function(data){
   insertNewComment(data);
 });
 
+socket.on('clear-comments', function(data){
+  broadcastClear()
+});
+
 // Emitters & Helpers
 
 function nextPage() {
@@ -96,8 +100,11 @@ function clearComments() {
     socket.emit('instruction', {
       command: "clear-comments"
     });
-    $(".unapproved-comment").remove();
   }
+}
+
+function broadcastClear() {
+  $(".unapproved-comment").remove();
 }
 
 $(document).ready(function(){
@@ -127,6 +134,5 @@ $(document).ready(function(){
     {
       downScale();
     }
-
   })
 })
