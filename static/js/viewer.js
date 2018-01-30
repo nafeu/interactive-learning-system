@@ -150,33 +150,41 @@ $(document).ready(function(){
   // DOM Events
   $(window).resize(function(){
     interaction.css('height', $(window).height());
-    body.keydown(function(event){
-      switch (event.which) {
-        case "39": // "right"
-          handleNextPage();
-          break;
-        case "37": // "left"
-          handlePreviousPage();
-          break;
-        case "187": // "+"
-          handleUpScale();
-          break;
-        case "189": // "-"
-          handleDownScale();
-          break;
-        case "38": // "up"
-          handleScrollUp();
-          break;
-        case "40": // "down"
-          handleScrollDown();
-          break;
-      }
-    });
-
-    function main() {
-      interaction.css('height', $(window).height());
-    }
-
-    main();
   });
+
+  body.keydown(function(event){
+    console.log(event.which);
+    switch (event.which) {
+      case 39: // "right"
+        event.preventDefault();
+        handleNextPage();
+        break;
+      case 37: // "left"
+        event.preventDefault();
+        handlePreviousPage();
+        break;
+      case 187: // "+"
+        event.preventDefault();
+        handleZoomIn();
+        break;
+      case 189: // "-"
+        event.preventDefault();
+        handleZoomOut();
+        break;
+      case 38: // "up"
+        event.preventDefault();
+        handleScrollUp();
+        break;
+      case 40: // "down"
+        event.preventDefault();
+        handleScrollDown();
+        break;
+    }
+  });
+
+  function main() {
+    interaction.css('height', $(window).height());
+  }
+
+  main();
 });
