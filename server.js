@@ -1,6 +1,10 @@
 const appState = {
   unapprovedQuestions:[],
-  approvedQuestions: []
+  approvedQuestions: [],
+  numSubmissions: 0,
+  getId: function() {
+    return this.numSubmissions++;
+  }
 }
 const express = require('express')
 const path = require('path')
@@ -38,7 +42,7 @@ server.listen(process.env.PORT || serverPort, () => {
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
 io.set('heartbeat interval', 2000)
-socketEvents.use(io)
+socketEvents.use(io, appState)
 
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
@@ -62,8 +66,8 @@ app.use(express.static(path.join(__dirname, 'static')))
 
 module.exports = server
 
-// Debug Polling
-const debugPolling = setInterval(function(){
-  console.log("[ server.js ] Appstate: ");
-  console.log(appState);
-}, 5000)
+// // Debug Polling
+// const debugPolling = setInterval(function(){
+//   console.log("[ server.js ] Appstate: ");
+//   console.log(appState);
+// }, 5000)

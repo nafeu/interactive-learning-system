@@ -14,6 +14,10 @@ module.exports = {
         console.log(`[ socket-events.js ] ${socket.id} disconnected...`)
       });
 
+      socket.on('get-state', () => {
+        socket.emit('update-state', appState);
+      })
+
     });
   }
 

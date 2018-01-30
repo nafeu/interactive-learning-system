@@ -1,8 +1,11 @@
-// var socket = io({
-//   'reconnection': true,
-//   'reconnectionDelay': 100,
-//   'reconnectionAttempts': 50
-// });
+var socket = io({
+  'reconnection': true,
+});
+
+var body,
+    unapprovedQuestions,
+    approvedQuestions,
+    currState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event handlers
@@ -11,17 +14,33 @@
 //   confirm("You lost connection, please refresh page to interact again...");
 // })
 
-// socket.on('new connection', function(data){
-//   console.log("connected with id: " + data.id);
-// })
+socket.on('new connection', function(data){
+  console.log("connected with id: " + data.id);
+  socket.emit('get-state');
+})
 
-// socket.on('test', function(data){
-//   alert('test payload: ' + JSON.stringify(data));
-// });
+socket.on('test', function(data){
+  alert('test payload: ' + JSON.stringify(data));
+});
 
-var body,
-    unapprovedComments,
-    approvedComments;
+socket.on('update-state', function(newState){
+  if (stateUpdated(currState, newState)) {
+    console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
+    currState = newState;
+    render(currState)
+  }
+});
+
+function render(state) {
+  unapprovedQuestions.empty();
+  state.unapprovedQuestions.forEach(function(question){
+    unapprovedQuestions.append("<p>" + question.text + "</p>");
+  })
+  approvedQuestions.empty();
+  state.approvedQuestions.forEach(function(question){
+    approvedQuestions.append("<p>" + question.text + "</p>");
+  })
+}
 
 // ---------------------------------------------------------------------------
 // Event Emitters
@@ -45,11 +64,22 @@ function emitZoomOut() {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+// function pollQuestions(){
+//   $.get('/api/questions?type=unapproved', function(data) {
+//     console.log("Poll data: ", data);
+//     unapprovedQuestions.text(JSON.stringify(data));
+//     setTimeout(pollQuestions, 3000);
+//   });
+// }
+
 $(document).ready(function(){
   console.log("[ instructor.js ] Document ready...");
 
   // DOM Selectors
   body = $("body");
+  unapprovedQuestions = $("#unapproved-questions");
+  approvedQuestions = $("#approved-questions");
 
   // DOM Event Handlers
   body.keydown(function(event){
@@ -70,7 +100,7 @@ $(document).ready(function(){
   })
 
   function main() {
-    // Code block
+
   }
 
   main();

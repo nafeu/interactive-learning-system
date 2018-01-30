@@ -1,8 +1,11 @@
-// var socket = io({
-//   'reconnection': true,
-//   'reconnectionDelay': 100,
-//   'reconnectionAttempts': 50
-// });
+var socket = io({
+  'reconnection': true,
+});
+
+var attendeeName,
+    questionField,
+    questionSubmit,
+    currState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
@@ -11,15 +14,21 @@
 //   confirm("You lost connection, please refresh page to interact again...");
 // })
 
-// socket.on('new connection', function(data){
-//   console.log("connected with id: " + data.id);
-// })
+socket.on('new connection', function(data){
+  console.log("connected with id: " + data.id);
+  socket.emit('get-state');
+})
 
-// socket.on('test', function(data){
-//   alert('test payload: ' + JSON.stringify(data));
-// });
+socket.on('test', function(data){
+  alert('test payload: ' + JSON.stringify(data));
+});
 
-var attendeeName, questionField, questionSubmit;
+socket.on('update-state', function(newState){
+  if (stateUpdated(currState, newState)) {
+    console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
+    currState = newState;
+  }
+});
 
 // ---------------------------------------------------------------------------
 // Event Emitters

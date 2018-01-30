@@ -21,3 +21,10 @@ function instructorAction(command, data) {
     data: data
   });
 }
+
+function stateUpdated(oldState, newState) {
+  if (JSON.stringify(oldState) === JSON.stringify(newState)) {
+    return false;
+  }
+  return true;
+}
