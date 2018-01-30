@@ -23,9 +23,9 @@ var pdfDoc = null,
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
 // ---------------------------------------------------------------------------
-socket.on('disconnect', function(){
-  confirm("You lost connection, please refresh page to interact again...");
-})
+// socket.on('disconnect', function(){
+//   confirm("You lost connection, please refresh page to interact again...");
+// })
 
 socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
