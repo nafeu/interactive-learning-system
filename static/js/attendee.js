@@ -11,6 +11,10 @@ socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
 })
 
+socket.on('test', function(data){
+  alert('test payload: ' + JSON.stringify(data));
+});
+
 socket.on('disconnect', function(){
   confirm("You lost connection, please refresh page to interact again...");
 })

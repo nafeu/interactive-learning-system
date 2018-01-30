@@ -31,6 +31,10 @@ socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
 })
 
+socket.on('test', function(data){
+  alert('test payload: ' + JSON.stringify(data));
+});
+
 // ---------------------------------------------------------------------------
 // Event Handlers
 // ---------------------------------------------------------------------------
