@@ -97,6 +97,10 @@ function emitZoomOut() {
   instructorAction("zoom-out");
 }
 
+function emitToggleInteraction() {
+  instructorAction("toggle-interaction");
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------

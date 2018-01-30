@@ -5,7 +5,10 @@ var socket = io({
 });
 
 var publicComments,
-    interaction;
+    questionsArea,
+    quizArea,
+    questionsContent,
+    quizContent;
 
 // PDF.js Configs
 var pdfDoc = null,
@@ -61,14 +64,18 @@ socket.on('update-state', function(newState){
   }
 });
 
+socket.on('toggle-interaction', function(){
+  handleToggleInteraction();
+});
+
 function render(state) {
-  interaction.empty();
+  questionsContent.empty();
 
   state.approvedQuestions.sort(function(a, b) {
     return b.votes - a.votes;
   })
   state.approvedQuestions.forEach(function(question){
-    interaction.append(createQuestionElement(question, "display-question"));
+    questionsContent.append(createQuestionElement(question, "display-question"));
   })
 }
 
@@ -123,11 +130,16 @@ function handleZoomIn() {
 }
 
 function handleScrollDown() {
-  interaction.scrollTop(interaction.scrollTop() + 100);
+  questionsArea.scrollTop(questionsArea.scrollTop() + 100);
 }
 
 function handleScrollUp() {
-  interaction.scrollTop(interaction.scrollTop() - 100);
+  questionsArea.scrollTop(questionsArea.scrollTop() - 100);
+}
+
+function handleToggleInteraction() {
+  questionsArea.toggle();
+  quizArea.toggle();
 }
 
 // ---------------------------------------------------------------------------
@@ -176,11 +188,15 @@ $(document).ready(function(){
 
   // DOM References
   body = $("body");
-  interaction = $("#interaction");
+  questionsArea = $("#questions-area");
+  quizArea = $("#quiz-area");
+  questionsContent = $("#questions-content");
+  quizContent = $("#quiz-content");
 
   // DOM Events
   $(window).resize(function(){
-    interaction.css('height', $(window).height());
+    questionsArea.css('height', $(window).height());
+    quizArea.css('height', $(window).height());
   });
 
   body.keydown(function(event){
@@ -210,11 +226,17 @@ $(document).ready(function(){
         event.preventDefault();
         handleScrollDown();
         break;
+      case 81: // "q"
+        event.preventDefault();
+        handleToggleInteraction();
+        break;
     }
   });
 
   function main() {
-    interaction.css('height', $(window).height());
+    questionsArea.css('height', $(window).height());
+    quizArea.css('height', $(window).height());
+    quizArea.hide();
   }
 
   main();
