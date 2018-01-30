@@ -5,9 +5,11 @@
   <% include ../partials/head %>
 </head>
 <style type="text/css">
-  #name-field, #question-field, #question-submit {
-    width: 100%;
-    font-size: 1.5em;
+
+  body {
+    background-color: #222f3e;
+    padding: 40px;
+    color: white;
   }
 
   .button {
@@ -29,12 +31,25 @@
     cursor: pointer;
   }
 
+  #question-field, #input-field {
+    width: 100%;
+    padding: 20px;
+    font-size: 1.25em;
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
+
+  #question-submit {
+    text-align: center;
+  }
+
 </style>
 <body>
   <div class="row">
     <div id="attendee-submissions" class="col-md-8 col-xs-12">
-      <input id="name-field" class="col-md-12" placeholder="Enter your name (or leave blank to remain anonymous)"></input>
-      <textarea id="question-field" class="col-md-12" placeholder="Enter your questions"></textarea>
+      <input id="name-field" placeholder="Enter your name (or leave blank to remain anonymous)"></input>
+      <textarea id="question-field" placeholder="Enter your questions"></textarea>
       <div id="question-submit" class="button col-md-12" onclick="submitQuestion()">Submit</div>
     </div>
     <div id="user-voting" class="col-md-4 col-xs-12">
