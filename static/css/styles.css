@@ -99,6 +99,32 @@ body {
   text-align: center;
 }
 
+h4 {
+  margin-top: 0;
+  color: white;
+  font-weight: 100;
+  font-size: 1.5em;
+  letter-spacing: 0px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.purple-border-bottom {
+  border-bottom: 2px solid #341f97;
+}
+
+.blue-border-bottom {
+  border-bottom: 2px solid #2e86de;
+}
+
+.green-border-bottom {
+  border-bottom: 2px solid #01a3a4;
+}
+
+*:focus {
+    outline: none;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

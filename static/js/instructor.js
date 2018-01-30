@@ -48,21 +48,22 @@ function createQuestionElement(question, className) {
   var votes = $("<div>", {class: "question-votes"}).text(question.votes);
   var actions = $("<div>", {class: "question-actions"});
 
+  out.append(text);
+
   if (className === "unapproved-question") {
-    var approveButton = $("<div>", {class: "approve-btn"}).text("Approve");
+    var approveButton = $("<div>", {class: "approve-btn"}).html('<i class="fa fa-check"></i>');
     approveButton.attr("onclick", "approveQuestion(" + question.id + ")");
-    var rejectButton = $("<div>", {class: "reject-btn"}).text("Reject");
+    var rejectButton = $("<div>", {class: "reject-btn"}).html('<i class="fa fa-close"></i>');
     rejectButton.attr("onclick", "removeQuestion(" + question.id + ")");
     actions.append(approveButton);
     actions.append(rejectButton);
   } else {
-    var removeButton = $("<div>", {class: "remove-btn"}).text("Remove");
+    var removeButton = $("<div>", {class: "remove-btn"}).html('<i class="fa fa-close"></i>');
     removeButton.attr("onclick", "removeQuestion(" + question.id + ")");
     actions.append(removeButton);
+    out.append(votes);
   }
 
-  out.append(text);
-  out.append(votes);
   out.append(actions);
   return out;
 }

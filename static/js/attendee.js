@@ -46,19 +46,22 @@ function createQuestionElement(question, className) {
   var actions = $("<div>", {class: "question-actions"});
 
   out.append(text);
-  out.append(votes);
 
+  var voteButton = $("<div>", {id: "vote-id-" + question.id, class: "vote-btn"});
   if ($.inArray(question.id, submittedVotes) < 0) {
-    var voteButton = $("<div>", {id: "vote-id-" + question.id, class: "vote-btn"}).text("Upvote");
+    var thumbsUp = '<i class="fa fa-thumbs-o-up"></i>';
     voteButton.attr("onclick", "upvoteQuestion(" + question.id + ")");
-    actions.append(voteButton);
-    out.append(actions);
+  } else {
+    var thumbsUp = '<i class="fa fa-thumbs-up"></i>';
   }
+  voteButton.append(thumbsUp);
+  actions.append(voteButton);
+  actions.append(votes);
+  out.append(actions);
   return out;
 }
 
 function upvoteQuestion(id) {
-  $("vote-id-" + id).remove();
   socket.emit("upvote-question", id);
   submittedVotes.push(id);
 }
