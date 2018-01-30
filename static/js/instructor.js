@@ -34,12 +34,47 @@ socket.on('update-state', function(newState){
 function render(state) {
   unapprovedQuestions.empty();
   state.unapprovedQuestions.forEach(function(question){
-    unapprovedQuestions.append("<p>" + question.text + "</p>");
+    unapprovedQuestions.append(createQuestionElement(question, "unapproved-question"));
   })
   approvedQuestions.empty();
   state.approvedQuestions.forEach(function(question){
-    approvedQuestions.append("<p>" + question.text + "</p>");
+    approvedQuestions.append(createQuestionElement(question, "approved-question"));
   })
+}
+
+function createQuestionElement(question, className) {
+  var out = $("<div>", {class: className});
+  var text = $("<div>", {class: "question-text"}).text(question.text);
+  var votes = $("<div>", {class: "question-votes"}).text(question.votes);
+  var actions = $("<div>", {class: "question-actions"});
+
+  if (className === "unapproved-question") {
+    var approveButton = $("<div>", {class: "approve-btn"}).text("Approve");
+    approveButton.attr("onclick", "approveQuestion(" + question.id + ")");
+    var rejectButton = $("<div>", {class: "reject-btn"}).text("Reject");
+    rejectButton.attr("onclick", "removeQuestion(" + question.id + ")");
+    actions.append(approveButton);
+    actions.append(rejectButton);
+  } else {
+    var removeButton = $("<div>", {class: "remove-btn"}).text("Remove");
+    removeButton.attr("onclick", "removeQuestion(" + question.id + ")");
+    actions.append(removeButton);
+  }
+
+  out.append(text);
+  out.append(votes);
+  out.append(actions);
+  return out;
+}
+
+function approveQuestion(id) {
+  socket.emit("approve-question", id);
+}
+
+function removeQuestion(id) {
+  if (confirm("Confirm question removal.")) {
+    socket.emit("remove-question", id);
+  }
 }
 
 // ---------------------------------------------------------------------------

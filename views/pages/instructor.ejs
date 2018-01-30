@@ -8,19 +8,30 @@
   .instructor-button {
     width: 100%;
   }
+
   body {
     padding: 0px 20px 0px 20px;
   }
+
+  .unapproved-question, .approved-question {
+    padding: 20px;
+    border: 1px solid black;
+  }
+
+  .approve-btn, .reject-btn, .remove-btn, .action-btn {
+    cursor: pointer;
+  }
+
 </style>
 <body>
   <div class="row">
     <div class="col-md-4 col-xs-12">
-      <h4>Unapproved Questions:</h4>
+      <h4>Instructor Actions:</h4>
       <div id="instructor-actions">
-        <div class="instructor-button" onclick="emitNextPage()">Next Page</div>
-        <div class="instructor-button" onclick="emitPreviousPage()">Previous Page</div>
-        <div class="instructor-button" onclick="emitZoomIn()">Zoom In</div>
-        <div class="instructor-button" onclick="emitZoomOut()">Zoom Out</div>
+        <div class="action-btn" onclick="emitNextPage()">Next Page</div>
+        <div class="action-btn" onclick="emitPreviousPage()">Previous Page</div>
+        <div class="action-btn" onclick="emitZoomIn()">Zoom In</div>
+        <div class="action-btn" onclick="emitZoomOut()">Zoom Out</div>
       </div>
     </div>
     <div class="col-md-4 col-xs-12">
