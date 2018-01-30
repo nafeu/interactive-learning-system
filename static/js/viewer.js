@@ -35,6 +35,22 @@ socket.on('test', function(data){
   alert('test payload: ' + JSON.stringify(data));
 });
 
+socket.on('next-page', function(){
+  handleNextPage();
+})
+
+socket.on('previous-page', function(){
+  handlePreviousPage();
+})
+
+socket.on('zoom-in', function(){
+  handleZoomIn();
+})
+
+socket.on('zoom-out', function(){
+  handleZoomOut();
+})
+
 // ---------------------------------------------------------------------------
 // Event Handlers
 // ---------------------------------------------------------------------------
@@ -43,7 +59,7 @@ function handleNewScale(newScale) {
   queueRenderPage(pageNum);
 }
 
-function handlePrevPage() {
+function handlePreviousPage() {
   if (pageNum <= 1) {
     return;
   }
@@ -59,7 +75,7 @@ function handleNextPage() {
   queueRenderPage(pageNum);
 }
 
-function handleDownScale() {
+function handleZoomOut() {
   if (scale <= scaleLowerLimit) {
     return;
   }
@@ -67,16 +83,12 @@ function handleDownScale() {
   queueRenderPage(pageNum);
 }
 
-function handleUpScale() {
+function handleZoomIn() {
   if (scale >= scaleUpperLimit) {
     return;
   }
   scale += scaleIncrement;
   queueRenderPage(pageNum);
-}
-
-function handleClearComments() {
-  interaction.empty();
 }
 
 function handleScrollDown() {
@@ -144,7 +156,7 @@ $(document).ready(function(){
           handleNextPage();
           break;
         case "37": // "left"
-          handlePrevPage();
+          handlePreviousPage();
           break;
         case "187": // "+"
           handleUpScale();

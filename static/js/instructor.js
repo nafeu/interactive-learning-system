@@ -24,6 +24,25 @@ socket.on('test', function(data){
 });
 
 // ---------------------------------------------------------------------------
+// Event Emitters
+// ---------------------------------------------------------------------------
+function emitNextPage() {
+  instructorAction("next-page");
+}
+
+function emitPreviousPage() {
+  instructorAction("previous-page");
+}
+
+function emitZoomIn() {
+  instructorAction("zoom-in");
+}
+
+function emitZoomOut() {
+  instructorAction("zoom-out");
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 $(document).ready(function(){
@@ -36,16 +55,16 @@ $(document).ready(function(){
   body.keydown(function(event){
     switch(event.which) {
       case "221": // "]"
-        nextPage();
+        emitNextPage();
         break;
       case "219": // "["
-        prevPage();
+        emitPrevPage();
         break;
       case "187": // "+"
-        upScale();
+        emitUpScale();
         break;
       case "189": // "-"
-        downScale();
+        emitDownScale();
         break;
     }
   })
