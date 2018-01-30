@@ -29,5 +29,14 @@ module.exports = (io, appState) => {
     }
   })
 
+  router.post('/questions', (req, res) => {
+    if (req.body.type === "submission") {
+      appState.unapprovedQuestions.push(req.body.question)
+      res.status(200).send('OK')
+    } else {
+      res.status(500).send('Invalid request.')
+    }
+  })
+
   return router
 }

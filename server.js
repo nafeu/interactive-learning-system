@@ -1,4 +1,7 @@
-const appState = {}
+const appState = {
+  unapprovedQuestions:[],
+  approvedQuestions: []
+}
 const express = require('express')
 const path = require('path')
 const app = express()
@@ -58,3 +61,9 @@ app.get('/attendee', function(req, res) {
 app.use(express.static(path.join(__dirname, 'static')))
 
 module.exports = server
+
+// Debug Polling
+const debugPolling = setInterval(function(){
+  console.log("[ server.js ] Appstate: ");
+  console.log(appState);
+}, 5000)

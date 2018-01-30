@@ -5,9 +5,39 @@
   <% include ../partials/head %>
 </head>
 <style type="text/css">
+  #name-field, #question-field, #question-submit {
+    width: 100%;
+    font-size: 1.5em;
+  }
+
+  .button {
+    cursor: pointer;
+  }
+
+  .button:active {
+    opacity: 0.5;
+  }
 
 </style>
 <body>
+  <div class="row">
+    <div id="attendee-submissions" class="col-md-8">
+      <div class="box">
+        <div class="col-md-12">
+          <input id="name-field" class="col-md-12" placeholder="Enter your name (or leave blank to remain anonymous)"></input>
+        </div>
+        <div class="col-md-12">
+          <textarea id="question-field" class="col-md-12" placeholder="Enter your questions"></textarea>
+        </div>
+        <div id="question-submit" class="button col-md-12" onclick="submitQuestion()">Submit</div>
+      </div>
+    </div>
+    <div id="attendee-insight" class="col-md-4">
+      <div class="box">
+
+      </div>
+    </div>
+  </div>
   <script src="js/attendee.js"></script>
 </body>
 </html>

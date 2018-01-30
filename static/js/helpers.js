@@ -2,24 +2,22 @@
 // Helpers
 // ---------------------------------------------------------------------------
 
-function remoteCall(payload, init, done, fail) {
-  $.post( "/api/remote", payload, init)
-    .done(done)
-    .fail(fail);
+function remoteCall(payload) {
+  return $.post( "/api/remote", payload)
 }
 
-function attendeeAction(command, data, init, done, fail) {
-  remoteCall({
+function attendeeAction(command, data) {
+  return remoteCall({
     user: "attendee",
     command: command,
     data: data
-  }, init, done, fail);
+  });
 }
 
-function instructorAction(command, data, init, done, fail) {
-  remoteCall({
+function instructorAction(command, data) {
+  return remoteCall({
     user: "instructor",
     command: command,
     data: data
-  }, init, done, fail);
+  });
 }
