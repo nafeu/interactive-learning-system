@@ -26,7 +26,7 @@ module.exports = {
             appState.approvedQuestions.push(approvedQuestion)
           }
         })
-        socket.emit('update-state', appState)
+        io.emit('update-state', appState)
       })
 
       socket.on('remove-question', (id) => {
@@ -34,15 +34,24 @@ module.exports = {
         appState.approvedQuestions.forEach(function(item, index){
           if (item.id === id) {
             appState.approvedQuestions.splice(index, 1)
-            socket.emit('update-state', appState)
+            io.emit('update-state', appState)
           }
         })
         appState.unapprovedQuestions.forEach(function(item, index){
           if (item.id === id) {
             appState.unapprovedQuestions.splice(index, 1)
-            socket.emit('update-state', appState)
+            io.emit('update-state', appState)
           }
         })
+      })
+
+      socket.on('upvote-question', (id) => {
+        appState.approvedQuestions.forEach(function(item){
+          if (item.id === id) {
+            item.votes++
+            io.emit('update-state', appState)
+          }
+        });
       })
 
     });

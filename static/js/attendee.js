@@ -5,7 +5,8 @@ var socket = io({
 var attendeeName,
     questionField,
     questionSubmit,
-    currState = {};
+    currState = {},
+    submittedVotes = [];
 
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
@@ -27,8 +28,40 @@ socket.on('update-state', function(newState){
   if (stateUpdated(currState, newState)) {
     console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
     currState = newState;
+    render(currState);
   }
 });
+
+function render(state) {
+  userVoting.empty();
+  state.approvedQuestions.forEach(function(question){
+    userVoting.append(createQuestionElement(question, "display-question"));
+  })
+}
+
+function createQuestionElement(question, className) {
+  var out = $("<div>", {class: className});
+  var text = $("<div>", {class: "question-text"}).text(question.text);
+  var votes = $("<div>", {class: "question-votes"}).text(question.votes);
+  var actions = $("<div>", {class: "question-actions"});
+
+  out.append(text);
+  out.append(votes);
+
+  if ($.inArray(question.id, submittedVotes) < 0) {
+    var voteButton = $("<div>", {id: "vote-id-" + question.id, class: "vote-btn"}).text("Upvote");
+    voteButton.attr("onclick", "upvoteQuestion(" + question.id + ")");
+    actions.append(voteButton);
+    out.append(actions);
+  }
+  return out;
+}
+
+function upvoteQuestion(id) {
+  $("vote-id-" + id).remove();
+  socket.emit("upvote-question", id);
+  submittedVotes.push(id);
+}
 
 // ---------------------------------------------------------------------------
 // Event Emitters
@@ -73,6 +106,7 @@ $(document).ready(function(){
   attendeeName = $("#name-field");
   questionField = $("#question-field");
   questionSubmit = $("#question-submit");
+  userVoting = $("#user-voting");
 
   // DOM Events
   attendeeName.change(function(){

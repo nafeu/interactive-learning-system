@@ -18,7 +18,8 @@ var pdfDoc = null,
     scaleIncrement = 0.1,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d'),
-    url = '../assets/example.pdf';
+    url = '../assets/example.pdf',
+    currState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
@@ -29,6 +30,7 @@ var pdfDoc = null,
 
 socket.on('new connection', function(data){
   console.log("connected with id: " + data.id);
+  socket.emit('get-state');
 })
 
 socket.on('test', function(data){
@@ -50,6 +52,35 @@ socket.on('zoom-in', function(){
 socket.on('zoom-out', function(){
   handleZoomOut();
 })
+
+socket.on('update-state', function(newState){
+  if (stateUpdated(currState, newState)) {
+    console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
+    currState = newState;
+    render(currState)
+  }
+});
+
+function render(state) {
+  interaction.empty();
+
+  state.approvedQuestions.sort(function(a, b) {
+    return b.votes - a.votes;
+  })
+  state.approvedQuestions.forEach(function(question){
+    interaction.append(createQuestionElement(question, "display-question"));
+  })
+}
+
+function createQuestionElement(question, className) {
+  var out = $("<div>", {class: className});
+  var text = $("<div>", {class: "question-text"}).text(question.text);
+  var votes = $("<div>", {class: "question-votes"}).text(question.votes);
+
+  out.append(text);
+  out.append(votes);
+  return out;
+}
 
 // ---------------------------------------------------------------------------
 // Event Handlers
@@ -144,8 +175,8 @@ $(document).ready(function(){
   console.log("[ viewer.js ] Document ready...");
 
   // DOM References
-  interaction = $("#interaction");
   body = $("body");
+  interaction = $("#interaction");
 
   // DOM Events
   $(window).resize(function(){

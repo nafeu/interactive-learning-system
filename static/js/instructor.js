@@ -27,7 +27,7 @@ socket.on('update-state', function(newState){
   if (stateUpdated(currState, newState)) {
     console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
     currState = newState;
-    render(currState)
+    render(currState);
   }
 });
 
