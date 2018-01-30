@@ -10,7 +10,16 @@
   }
 
   body {
-    padding: 0px 20px 0px 20px;
+    background-color: #222f3e;
+    padding: 40px;
+    color: white;
+  }
+
+  h4 {
+    margin-top: 0;
+    color: white;
+    font-weight: 100;
+    font-size: 1.25em;
   }
 
   .unapproved-question, .approved-question {
@@ -22,11 +31,47 @@
     cursor: pointer;
   }
 
+  #section-a, #section-b, #section-c {
+    padding: 30px;
+  }
+
+  #section-a {
+    background-color: #5f27cd;
+    border-bottom: 50px solid #341f97;
+  }
+
+  #section-b {
+    background-color: #54a0ff;
+    border-bottom: 50px solid #2e86de;
+  }
+
+  #section-c {
+    background-color: #00d2d3;
+    border-bottom: 50px solid #01a3a4;
+  }
+
+  .action-btn {
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid white;
+    border-bottom: 4px solid white;
+    padding: 10px;
+    margin: 20px;
+    font-weight: 100;
+    font-size: 1.5em;
+    border-radius: 10px;
+  }
+
+  .action-btn:active {
+    color: #5f27cd;
+    background-color: white;
+  }
+
 </style>
 <body>
   <div class="row">
-    <div class="col-md-4 col-xs-12">
-      <h4>Instructor Actions:</h4>
+    <div id="section-a" class="col-md-4 col-xs-12">
+      <h4>Viewer Control</h4>
       <div id="instructor-actions">
         <div class="action-btn" onclick="emitNextPage()">Next Page</div>
         <div class="action-btn" onclick="emitPreviousPage()">Previous Page</div>
@@ -34,14 +79,14 @@
         <div class="action-btn" onclick="emitZoomOut()">Zoom Out</div>
       </div>
     </div>
-    <div class="col-md-4 col-xs-12">
-      <h4>Unapproved Questions:</h4>
+    <div id="section-b" class="col-md-4 col-xs-12">
+      <h4>Approvals</h4>
       <div id="unapproved-questions">
 
       </div>
     </div>
-    <div class="col-md-4 col-xs-12">
-      <h4>Approved Questions:</h4>
+    <div id="section-c" class="col-md-4 col-xs-12">
+      <h4>Live</h4>
       <div id="approved-questions">
 
       </div>
