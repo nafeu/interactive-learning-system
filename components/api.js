@@ -5,7 +5,7 @@ const router = express.Router()
 // Express API
 // ---------------------------------------------------------------------------
 
-module.exports = (io, questionsState) => {
+module.exports = (io, questionsState, quizState) => {
 
   router.use((req, res, next) => {
     const time = new Date().toTimeString()
@@ -51,8 +51,13 @@ module.exports = (io, questionsState) => {
     res.status(500).send('Invalid request.')
   })
 
-  router.post('/quizzes', (req, res) => {
-
+  router.post('/quiz', (req, res) => {
+    if (req.body.type === 'submission' && quizState.data.length <= req.body.answerIndex) {
+      quizState.data[req.body.answerIndex];
+      io.emit("update-quiz-state", quizState);
+      res.status(200).send('OK')
+    }
+    res.status(500).send('Invalid request.')
   })
 
   return router

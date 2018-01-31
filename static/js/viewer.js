@@ -22,7 +22,8 @@ var pdfDoc = null,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d'),
     url = '../assets/example.pdf',
-    currQuestionsState = {};
+    currQuestionsState = {},
+    currQuizState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
@@ -60,7 +61,15 @@ socket.on('update-questions-state', function(newState){
   if (stateUpdated(currQuestionsState, newState)) {
     console.log("[ instructor.js ] Updating questions state --> " + JSON.stringify(newState))
     currQuestionsState = newState;
-    render(currQuestionsState)
+    renderQuestions(currQuestionsState);
+  }
+});
+
+socket.on('update-quiz-state', function(newState){
+  if (stateUpdated(currQuizState, newState)) {
+    console.log("[ instructor.js ] Updating quiz state --> " + JSON.stringify(newState))
+    currQuizState = newState;
+    renderQuiz(currQuizState);
   }
 });
 
@@ -68,7 +77,7 @@ socket.on('toggle-interaction', function(){
   handleToggleInteraction();
 });
 
-function render(state) {
+function renderQuestions(state) {
   questionsContent.empty();
 
   state.approvedQuestions.sort(function(a, b) {
@@ -77,6 +86,10 @@ function render(state) {
   state.approvedQuestions.forEach(function(question){
     questionsContent.append(createQuestionElement(question, "display-question"));
   })
+}
+
+function renderQuiz(state) {
+  console.log(state);
 }
 
 function createQuestionElement(question, className) {

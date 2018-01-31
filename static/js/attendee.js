@@ -5,7 +5,10 @@ var socket = io({
 var attendeeName,
     questionField,
     questionSubmit,
+    userVoting,
+    userQuiz,
     currQuestionsState = {},
+    currQuizState = {},
     submittedVotes = [];
 
 // ---------------------------------------------------------------------------
@@ -26,17 +29,29 @@ socket.on('test', function(data){
 
 socket.on('update-questions-state', function(newState){
   if (stateUpdated(currQuestionsState, newState)) {
-    console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
+    console.log("[ instructor.js ] Updating questions state --> " + JSON.stringify(newState))
     currQuestionsState = newState;
-    render(currQuestionsState);
+    renderQuestions(currQuestionsState);
   }
 });
 
-function render(state) {
+socket.on('update-quiz-state', function(newState){
+  if (stateUpdated(currQuizState, newState)) {
+    console.log("[ instructor.js ] Updating quiz state --> " + JSON.stringify(newState))
+    currQuizState = newState;
+    renderQuiz(currQuizState);
+  }
+});
+
+function renderQuestions(state) {
   userVoting.empty();
   state.approvedQuestions.forEach(function(question){
     userVoting.append(createQuestionElement(question, "display-question"));
   })
+}
+
+function renderQuiz(state) {
+  console.log(state);
 }
 
 function createQuestionElement(question, className) {
@@ -93,6 +108,12 @@ function submitQuestion() {
   }
 }
 
+function submitResponse(answerIndex) {
+  $.post("/api/quiz", {type: "submission", answerIndex: answerIndex}, function(data){
+    console.log(data);
+  })
+}
+
 function getName() {
   if (attendeeName.val().length > 0) {
     return attendeeName.val();
@@ -110,6 +131,7 @@ $(document).ready(function(){
   questionField = $("#question-field");
   questionSubmit = $("#question-submit");
   userVoting = $("#user-voting");
+  userQuiz = $("#user-quiz");
 
   // DOM Events
   attendeeName.change(function(){

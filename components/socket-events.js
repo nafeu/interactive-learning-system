@@ -4,7 +4,7 @@
 
 module.exports = {
 
-  "use": (io, questionsState) => {
+  "use": (io, questionsState, quizState) => {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})
@@ -16,6 +16,7 @@ module.exports = {
 
       socket.on('get-state', () => {
         socket.emit('update-questions-state', questionsState)
+        socket.emit('update-quiz-state', quizState)
       })
 
       socket.on('approve-question', (id) => {
@@ -52,6 +53,16 @@ module.exports = {
             io.emit('update-questions-state', questionsState)
           }
         });
+      })
+
+      socket.on('start-quiz', (labels) => {
+        quizState.setQuizMode(labels);
+        io.emit('update-quiz-state', quizState);
+      })
+
+      socket.on('end-quiz', () => {
+        quizState.active = false;
+        io.emit('update-quiz-state', quizState);
       })
 
     });

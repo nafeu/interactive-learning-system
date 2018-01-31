@@ -5,7 +5,8 @@ var socket = io({
 var body,
     unapprovedQuestions,
     approvedQuestions,
-    currQuestionsState = {};
+    currQuestionsState = {},
+    currQuizState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event handlers
@@ -27,11 +28,19 @@ socket.on('update-questions-state', function(newState){
   if (stateUpdated(currQuestionsState, newState)) {
     console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
     currQuestionsState = newState;
-    render(currQuestionsState);
+    renderQuestions(currQuestionsState);
   }
 });
 
-function render(state) {
+socket.on('update-quiz-state', function(newState){
+  if (stateUpdated(currQuizState, newState)) {
+    console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
+    currQuizState = newState;
+    renderQuiz(currQuizState);
+  }
+});
+
+function renderQuestions(state) {
   unapprovedQuestions.empty();
   state.unapprovedQuestions.forEach(function(question){
     unapprovedQuestions.append(createQuestionElement(question, "unapproved-question"));
@@ -40,6 +49,10 @@ function render(state) {
   state.approvedQuestions.forEach(function(question){
     approvedQuestions.append(createQuestionElement(question, "approved-question"));
   })
+}
+
+function renderQuiz(state) {
+  console.log(state);
 }
 
 function createQuestionElement(question, className) {

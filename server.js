@@ -1,11 +1,25 @@
 const questionsState = {
-  unapprovedQuestions:[],
+  unapprovedQuestions: [],
   approvedQuestions: [],
   numSubmissions: 0,
   getId: function() {
     return this.numSubmissions++;
   }
 }
+
+const quizState = {
+  data: [],
+  labels: [],
+  active: false,
+  setQuizMode: function(newLabels) {
+    var self = this
+    self.data = []
+    labels.forEach(function(){ self.data.push(0) })
+    self.labels = newLabels
+    self.active = true
+  },
+}
+
 const express = require('express')
 const path = require('path')
 const app = express()
@@ -13,7 +27,7 @@ const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
-const api = require('./components/api')(io, questionsState)
+const api = require('./components/api')(io, questionsState, quizState)
 const socketEvents = require('./components/socket-events')
 
 // ---------------------------------------------------------------------------
@@ -42,7 +56,7 @@ server.listen(process.env.PORT || serverPort, () => {
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
 io.set('heartbeat interval', 2000)
-socketEvents.use(io, questionsState)
+socketEvents.use(io, questionsState, quizState)
 
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
