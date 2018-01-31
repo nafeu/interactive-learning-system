@@ -1,4 +1,4 @@
-const appState = {
+const questionsState = {
   unapprovedQuestions:[],
   approvedQuestions: [],
   numSubmissions: 0,
@@ -13,7 +13,7 @@ const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
-const api = require('./components/api')(io, appState)
+const api = require('./components/api')(io, questionsState)
 const socketEvents = require('./components/socket-events')
 
 // ---------------------------------------------------------------------------
@@ -42,7 +42,7 @@ server.listen(process.env.PORT || serverPort, () => {
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
 io.set('heartbeat interval', 2000)
-socketEvents.use(io, appState)
+socketEvents.use(io, questionsState)
 
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
@@ -68,6 +68,6 @@ module.exports = server
 
 // // Debug Polling
 // const debugPolling = setInterval(function(){
-//   console.log("[ server.js ] Appstate: ");
-//   console.log(appState);
+//   console.log("[ server.js ] questionsState: ");
+//   console.log(questionsState);
 // }, 5000)

@@ -22,7 +22,7 @@ var pdfDoc = null,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d'),
     url = '../assets/example.pdf',
-    currState = {};
+    currQuestionsState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
@@ -56,11 +56,11 @@ socket.on('zoom-out', function(){
   handleZoomOut();
 })
 
-socket.on('update-state', function(newState){
-  if (stateUpdated(currState, newState)) {
-    console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
-    currState = newState;
-    render(currState)
+socket.on('update-questions-state', function(newState){
+  if (stateUpdated(currQuestionsState, newState)) {
+    console.log("[ instructor.js ] Updating questions state --> " + JSON.stringify(newState))
+    currQuestionsState = newState;
+    render(currQuestionsState)
   }
 });
 

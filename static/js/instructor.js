@@ -5,7 +5,7 @@ var socket = io({
 var body,
     unapprovedQuestions,
     approvedQuestions,
-    currState = {};
+    currQuestionsState = {};
 
 // ---------------------------------------------------------------------------
 // Socket Event handlers
@@ -23,11 +23,11 @@ socket.on('test', function(data){
   alert('test payload: ' + JSON.stringify(data));
 });
 
-socket.on('update-state', function(newState){
-  if (stateUpdated(currState, newState)) {
+socket.on('update-questions-state', function(newState){
+  if (stateUpdated(currQuestionsState, newState)) {
     console.log("[ instructor.js ] Updating state --> " + JSON.stringify(newState))
-    currState = newState;
-    render(currState);
+    currQuestionsState = newState;
+    render(currQuestionsState);
   }
 });
 

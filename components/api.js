@@ -5,7 +5,7 @@ const router = express.Router()
 // Express API
 // ---------------------------------------------------------------------------
 
-module.exports = (io, appState) => {
+module.exports = (io, questionsState) => {
 
   router.use((req, res, next) => {
     const time = new Date().toTimeString()
@@ -31,13 +31,13 @@ module.exports = (io, appState) => {
 
   router.post('/questions', (req, res) => {
     if (req.body.type === "submission") {
-      appState.unapprovedQuestions.push({
-        id: appState.getId(),
+      questionsState.unapprovedQuestions.push({
+        id: questionsState.getId(),
         text: req.body.question,
         votes: 0,
       })
-      console.log(`[ socket-events.js ] Updated appState -> ${JSON.stringify(appState)}`);
-      io.emit("update-state", appState);
+      console.log(`[ socket-events.js ] Updated questionsState -> ${JSON.stringify(questionsState)}`);
+      io.emit("update-questions-state", questionsState);
       res.status(200).send('OK')
     } else {
       res.status(500).send('Invalid request.')
@@ -46,9 +46,13 @@ module.exports = (io, appState) => {
 
   router.get('/questions', (req, res) => {
     if (req.query.type === 'unapproved') {
-      res.status(200).json(appState.unapprovedQuestions);
+      res.status(200).json(questionsState.unapprovedQuestions);
     }
     res.status(500).send('Invalid request.')
+  })
+
+  router.post('/quizzes', (req, res) => {
+
   })
 
   return router

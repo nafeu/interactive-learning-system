@@ -4,7 +4,7 @@
 
 module.exports = {
 
-  "use": (io, appState) => {
+  "use": (io, questionsState) => {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})
@@ -15,41 +15,41 @@ module.exports = {
       });
 
       socket.on('get-state', () => {
-        socket.emit('update-state', appState)
+        socket.emit('update-questions-state', questionsState)
       })
 
       socket.on('approve-question', (id) => {
         console.log(`[ socket-events.js ] approve-question id: ${id}`)
-        appState.unapprovedQuestions.forEach(function(item, index){
+        questionsState.unapprovedQuestions.forEach(function(item, index){
           if (item.id === id) {
-            var approvedQuestion = appState.unapprovedQuestions.splice(index, 1)[0]
-            appState.approvedQuestions.push(approvedQuestion)
+            var approvedQuestion = questionsState.unapprovedQuestions.splice(index, 1)[0]
+            questionsState.approvedQuestions.push(approvedQuestion)
           }
         })
-        io.emit('update-state', appState)
+        io.emit('update-questions-state', questionsState)
       })
 
       socket.on('remove-question', (id) => {
         console.log(`[ socket-events.js ] remove-question id: ${id}`)
-        appState.approvedQuestions.forEach(function(item, index){
+        questionsState.approvedQuestions.forEach(function(item, index){
           if (item.id === id) {
-            appState.approvedQuestions.splice(index, 1)
-            io.emit('update-state', appState)
+            questionsState.approvedQuestions.splice(index, 1)
+            io.emit('update-questions-state', questionsState)
           }
         })
-        appState.unapprovedQuestions.forEach(function(item, index){
+        questionsState.unapprovedQuestions.forEach(function(item, index){
           if (item.id === id) {
-            appState.unapprovedQuestions.splice(index, 1)
-            io.emit('update-state', appState)
+            questionsState.unapprovedQuestions.splice(index, 1)
+            io.emit('update-questions-state', questionsState)
           }
         })
       })
 
       socket.on('upvote-question', (id) => {
-        appState.approvedQuestions.forEach(function(item){
+        questionsState.approvedQuestions.forEach(function(item){
           if (item.id === id) {
             item.votes++
-            io.emit('update-state', appState)
+            io.emit('update-questions-state', questionsState)
           }
         });
       })
