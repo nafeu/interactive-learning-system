@@ -55,8 +55,8 @@ module.exports = {
         });
       })
 
-      socket.on('start-quiz', (labels) => {
-        quizState.setQuizMode(labels);
+      socket.on('start-quiz', (data) => {
+        quizState.setQuizMode(data.labels);
         io.emit('update-quiz-state', quizState);
       })
 

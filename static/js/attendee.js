@@ -51,7 +51,10 @@ function renderQuestions(state) {
 }
 
 function renderQuiz(state) {
-  console.log(state);
+  userQuiz.empty();
+  state.labels.forEach(function(label, index){
+    userQuiz.append(createQuizElement(label, index));
+  });
 }
 
 function createQuestionElement(question, className) {
@@ -73,6 +76,12 @@ function createQuestionElement(question, className) {
   actions.append(voteButton);
   actions.append(votes);
   out.append(actions);
+  return out;
+}
+
+function createQuizElement(label, index) {
+  var out = $("<div>", {class: "response-btn", id: "response-id-" + index}).text(label);
+  out.attr("onclick", "submitResponse(" + index + ")");
   return out;
 }
 
@@ -110,7 +119,14 @@ function submitQuestion() {
 
 function submitResponse(answerIndex) {
   $.post("/api/quiz", {type: "submission", answerIndex: answerIndex}, function(data){
-    console.log(data);
+    console.log("responding...");
+  })
+  .done(function(){
+    userQuiz.empty();
+    userQuiz.text(answerIndex);
+  })
+  .fail(function(){
+    alert("There was an error submitting your response...");
   })
 }
 

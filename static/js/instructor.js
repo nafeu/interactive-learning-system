@@ -114,6 +114,14 @@ function emitToggleInteraction() {
   instructorAction("toggle-interaction");
 }
 
+function emitStartQuiz() {
+  socket.emit("start-quiz", {labels: ["A", "B", "C", "D"]});
+}
+
+function emitEndQuiz() {
+  socket.emit("end-quiz");
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------

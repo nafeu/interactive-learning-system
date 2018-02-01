@@ -14,7 +14,7 @@ const quizState = {
   setQuizMode: function(newLabels) {
     var self = this
     self.data = []
-    labels.forEach(function(){ self.data.push(0) })
+    newLabels.forEach(function(){ self.data.push(0) })
     self.labels = newLabels
     self.active = true
   },

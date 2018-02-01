@@ -9,10 +9,10 @@ module.exports = (io, questionsState, quizState) => {
 
   router.use((req, res, next) => {
     const time = new Date().toTimeString()
-    const {method, url} = req
+    const {method, url, body} = req
     const {statusCode} = res
 
-    console.log(`[ api.js - ${statusCode} ] ${method} ${url} : ${time}`)
+    console.log(`[ api.js - ${statusCode} ] ${method} ${url} ${JSON.stringify(body)}: ${time}`)
     next()
   })
 
@@ -52,7 +52,7 @@ module.exports = (io, questionsState, quizState) => {
   })
 
   router.post('/quiz', (req, res) => {
-    if (req.body.type === 'submission' && quizState.data.length <= req.body.answerIndex) {
+    if (req.body.type === 'submission') {
       quizState.data[req.body.answerIndex];
       io.emit("update-quiz-state", quizState);
       res.status(200).send('OK')
