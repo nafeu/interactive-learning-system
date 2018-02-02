@@ -84,7 +84,7 @@ function renderQuestions(state) {
     return b.votes - a.votes;
   })
   state.approvedQuestions.forEach(function(question){
-    questionsContent.append(createQuestionElement(question, "display-question"));
+    questionsContent.append(createQuestionElement(question, "display-question row"));
   })
 }
 
@@ -98,7 +98,7 @@ function createQuestionElement(question, className) {
   var votes = $("<div>", {class: "question-votes"}).text(question.votes);
 
   out.append(text);
-  out.append(votes);
+  // out.append(votes);
   return out;
 }
 
