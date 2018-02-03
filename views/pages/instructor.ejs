@@ -54,11 +54,7 @@
     font-weight: 100;
     font-size: 1.5em;
     border-radius: 10px;
-  }
-
-  .action-btn:active {
-    color: #5f27cd;
-    background-color: white;
+    transition: 300ms ease-in-out background-color;
   }
 
   .approved-question, .unapproved-question {
@@ -102,6 +98,11 @@
     margin-bottom: 10px;
   }
 
+  .button-down {
+    color: #5f27cd;
+    background-color: white;
+  }
+
 </style>
 <body>
   <div class="row">
@@ -109,13 +110,13 @@
       <div id="section-a">
         <h4>Viewer Control</h4>
         <div id="instructor-actions">
-          <div class="action-btn" onclick="emitNextPage()">Next Page</div>
-          <div class="action-btn" onclick="emitPreviousPage()">Previous Page</div>
-          <div class="action-btn" onclick="emitZoomIn()">Zoom In</div>
-          <div class="action-btn" onclick="emitZoomOut()">Zoom Out</div>
-          <div class="action-btn" onclick="emitToggleInteraction()">Toggle View</div>
-          <div class="action-btn" onclick="emitStartQuiz()">Start Quiz</div>
-          <div class="action-btn" onclick="emitEndQuiz()">End Quiz</div>
+          <div class="action-btn" onclick="emitNextPage(this)">Next Page</div>
+          <div class="action-btn" onclick="emitPreviousPage(this)">Previous Page</div>
+          <div class="action-btn" onclick="emitZoomIn(this)">Zoom In</div>
+          <div class="action-btn" onclick="emitZoomOut(this)">Zoom Out</div>
+          <div class="action-btn" onclick="emitToggleInteraction(this)">Toggle View</div>
+          <div class="action-btn" onclick="emitStartQuiz(this)">Start Quiz</div>
+          <div class="action-btn" onclick="emitEndQuiz(this)">End Quiz</div>
         </div>
       </div>
     </div>

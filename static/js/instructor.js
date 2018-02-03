@@ -94,31 +94,31 @@ function removeQuestion(id) {
 // ---------------------------------------------------------------------------
 // Event Emitters
 // ---------------------------------------------------------------------------
-function emitNextPage() {
-  instructorAction("next-page");
+function emitNextPage(ref) {
+  sendRemoteInstructorCommand("next-page", ref);
 }
 
-function emitPreviousPage() {
-  instructorAction("previous-page");
+function emitPreviousPage(ref) {
+  sendRemoteInstructorCommand("previous-page", ref);
 }
 
-function emitZoomIn() {
-  instructorAction("zoom-in");
+function emitZoomIn(ref) {
+  sendRemoteInstructorCommand("zoom-in", ref);
 }
 
-function emitZoomOut() {
-  instructorAction("zoom-out");
+function emitZoomOut(ref) {
+  sendRemoteInstructorCommand("zoom-out", ref);
 }
 
-function emitToggleInteraction() {
-  instructorAction("toggle-interaction");
+function emitToggleInteraction(ref) {
+  sendRemoteInstructorCommand("toggle-interaction", ref);
 }
 
-function emitStartQuiz() {
+function emitStartQuiz(ref) {
   socket.emit("start-quiz", {labels: ["A", "B", "C", "D"]});
 }
 
-function emitEndQuiz() {
+function emitEndQuiz(ref) {
   socket.emit("end-quiz");
 }
 
