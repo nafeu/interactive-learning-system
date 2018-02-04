@@ -52,9 +52,11 @@ function renderQuestions(state) {
 
 function renderQuiz(state) {
   userQuiz.empty();
-  state.labels.forEach(function(label, index){
-    userQuiz.append(createQuizElement(label, index));
-  });
+  if (state.active) {
+    state.labels.forEach(function(label, index){
+      userQuiz.append(createQuizElement(label, index));
+    });
+  }
 }
 
 function createQuestionElement(question, className) {
@@ -85,6 +87,11 @@ function createQuizElement(label, index) {
   return out;
 }
 
+function createQuizResponseConfirmation(label) {
+  var out = $("<div>", {class: "response-confirmation"}).text("You chose: " + label);
+  return out;
+}
+
 function upvoteQuestion(id) {
   socket.emit("upvote-question", id);
   submittedVotes.push(id);
@@ -96,7 +103,7 @@ function upvoteQuestion(id) {
 function submitQuestion() {
   if (questionField.val().length > 0) {
     var questionString = getName() + ": " + questionField.val();
-    $.post("/api/questions", {type: "submission", question: questionString}, function(data){
+    $.post("/api/questions", {type: "submission", data: {question: questionString}}, function(data){
       questionSubmit.text("Posting...");
       questionSubmit.attr("onclick", "");
     })
@@ -118,12 +125,12 @@ function submitQuestion() {
 }
 
 function submitResponse(answerIndex) {
-  $.post("/api/quiz", {type: "submission", answerIndex: answerIndex}, function(data){
+  $.post("/api/quiz", {type: "submission", data: {answerIndex: answerIndex}}, function(){
     console.log("responding...");
   })
-  .done(function(){
+  .done(function(data){
     userQuiz.empty();
-    userQuiz.text(answerIndex);
+    userQuiz.append(createQuizResponseConfirmation(data.labels[answerIndex]));
   })
   .fail(function(){
     alert("There was an error submitting your response...");

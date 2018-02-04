@@ -55,16 +55,6 @@ module.exports = {
         });
       })
 
-      socket.on('start-quiz', (data) => {
-        quizState.setQuizMode(data.labels);
-        io.emit('update-quiz-state', quizState);
-      })
-
-      socket.on('end-quiz', () => {
-        quizState.active = false;
-        io.emit('update-quiz-state', quizState);
-      })
-
     });
   }
 

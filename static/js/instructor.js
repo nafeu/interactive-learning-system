@@ -5,6 +5,7 @@ var socket = io({
 var body,
     unapprovedQuestions,
     approvedQuestions,
+    quizResults,
     currQuestionsState = {},
     currQuizState = {};
 
@@ -52,7 +53,15 @@ function renderQuestions(state) {
 }
 
 function renderQuiz(state) {
-  console.log(state);
+  quizResults.empty();
+  if (state.active) {
+    quizResults.append("<h3>You have an active quiz running.</h3>");
+  } else {
+    quizResults.append("<h3>There are no active quizzes running.</h3>");
+  }
+  state.data.forEach(function(item, index){
+    quizResults.append("<p class='quiz-response-info'>" + state.labels[index] + ": " + item + "</p>")
+  })
 }
 
 function createQuestionElement(question, className) {
@@ -115,24 +124,52 @@ function emitToggleInteraction(ref) {
 }
 
 function emitStartQuiz(ref) {
-  socket.emit("start-quiz", {labels: ["A", "B", "C", "D"]});
+  sendQuizInstructorCommand("start-quiz", {labels: ["A", "B", "C", "D"]}, ref);
 }
 
 function emitEndQuiz(ref) {
-  socket.emit("end-quiz");
+  sendQuizInstructorCommand("end-quiz", {}, ref);
 }
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-// function pollQuestions(){
-//   $.get('/api/questions?type=unapproved', function(data) {
-//     console.log("Poll data: ", data);
-//     unapprovedQuestions.text(JSON.stringify(data));
-//     setTimeout(pollQuestions, 3000);
-//   });
-// }
+function sendRemoteInstructorCommand(command, ref) {
+  element = $(ref);
+  action = element.attr("onclick");
+  $.post( "/api/remote", {user: "instructor", command: command}, function(){
+    element
+      .addClass("button-down")
+      .attr("onclick", "");
+  }).done(function(){
+    setTimeout(function(){
+      element
+        .removeClass("button-down")
+        .attr("onclick", action);
+    }, 300)
+  }).fail(function(){
+    alert("An error occured...");
+  });
+}
+
+function sendQuizInstructorCommand(type, data, ref) {
+  element = $(ref);
+  action = element.attr("onclick");
+  $.post( "/api/quiz", {type: type, data: data}, function(){
+    element
+      .addClass("button-down")
+      .attr("onclick", "");
+  }).done(function(){
+    setTimeout(function(){
+      element
+        .removeClass("button-down")
+        .attr("onclick", action);
+    }, 300)
+  }).fail(function(){
+    alert("An error occured...");
+  });
+}
 
 $(document).ready(function(){
   console.log("[ instructor.js ] Document ready...");
@@ -141,6 +178,7 @@ $(document).ready(function(){
   body = $("body");
   unapprovedQuestions = $("#unapproved-questions");
   approvedQuestions = $("#approved-questions");
+  quizResults = $("#quiz-results");
 
   // DOM Event Handlers
   body.keydown(function(event){

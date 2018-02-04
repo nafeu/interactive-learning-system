@@ -28,21 +28,3 @@ function stateUpdated(oldState, newState) {
   }
   return true;
 }
-
-function sendRemoteInstructorCommand(command, ref) {
-  element = $(ref);
-  action = element.attr("onclick");
-  $.post( "/api/remote", {user: "instructor", command: command}, function(){
-    element
-      .addClass("button-down")
-      .attr("onclick", "");
-  }).done(function(){
-    setTimeout(function(){
-      element
-        .removeClass("button-down")
-        .attr("onclick", action);
-    }, 300)
-  }).fail(function(){
-    alert("An error occured...");
-  });
-}
