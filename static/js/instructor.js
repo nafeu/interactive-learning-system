@@ -71,7 +71,7 @@ function renderQuiz(state) {
   if (state.active) {
     quizResults.append("<h3>You have an active quiz running.</h3>");
   } else {
-    quizResults.append("<h3>There are no active quizzes running.</h3>");
+    quizResults.append("<h3>There are no active surveys or quizzes running.</h3>");
   }
   state.data.forEach(function(item, index){
     quizResults.append("<p class='quiz-response-info'>" + state.labels[index] + ": " + item + "</p>")
@@ -137,8 +137,18 @@ function emitToggleInteraction(ref) {
   sendRemoteInstructorCommand("toggle-interaction", ref);
 }
 
-function emitStartQuiz(ref) {
-  sendQuizInstructorCommand("start-quiz", {labels: ["A", "B", "C", "D"]}, ref);
+function emitStartQuiz(ref, type) {
+  switch (type) {
+    case "abcd":
+      sendQuizInstructorCommand("start-quiz", {labels: ["A", "B", "C", "D"]}, ref);
+      break;
+    case "yn":
+      sendQuizInstructorCommand("start-quiz", {labels: ["Yes", "No"]}, ref);
+      break;
+    case "abcd":
+      sendQuizInstructorCommand("start-quiz", {labels: ["True", "False"]}, ref);
+      break;
+  }
 }
 
 function emitEndQuiz(ref) {

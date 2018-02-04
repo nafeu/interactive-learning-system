@@ -13,6 +13,8 @@
     background-color: #222f3e;
     padding: 40px;
     color: white;
+    padding-bottom: 0px;
+    padding-top: 30px;
   }
 
   .unapproved-question, .approved-question {
@@ -31,7 +33,9 @@
 
   #section-a {
     background-color: #5f27cd;
-    border-bottom: 50px solid #341f97;
+    border-bottom: 10px solid #341f97;
+    padding: 10px;
+    border-radius: 10px;
   }
 
   #section-b {
@@ -55,11 +59,13 @@
     border: 1px solid white;
     border-bottom: 4px solid white;
     padding: 10px;
-    margin: 20px;
+    margin: 5px;
     font-weight: 100;
-    font-size: 1.5em;
+    font-size: 1em;
     border-radius: 10px;
     transition: 300ms ease-in-out background-color;
+    display: inline-block;
+    min-width: 5%;
   }
 
   .approved-question, .unapproved-question {
@@ -114,47 +120,57 @@
     margin-top: 0px;
   }
 
+  #main h4 {
+    font-size: 1.75em;
+  }
+
+  #unapproved-questions, #approved-questions, #quiz-results {
+    border-top: 2px solid rgba(255,255,255,0.25);
+  }
+
 </style>
 <body>
   <% include ../partials/page-header %>
   <div class="page-info color-alt-grey"><i class="fa fa-cog"></i>&nbsp;<span class="thin-info">Instructor Control Panel</span></div>
-  <div class="row">
-    <div class="col-md-3 col-sm-12 col-xs-12">
+  <div id="main" class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
       <div id="section-a">
-        <h4>Viewer Control</h4>
         <div id="instructor-actions">
-          <div class="action-btn" onclick="emitNextPage(this)">Next Page</div>
-          <div class="action-btn" onclick="emitPreviousPage(this)">Previous Page</div>
-          <div class="action-btn" onclick="emitZoomIn(this)">Zoom In</div>
-          <div class="action-btn" onclick="emitZoomOut(this)">Zoom Out</div>
-          <div class="action-btn" onclick="emitToggleInteraction(this)">Toggle View</div>
-          <div class="action-btn" onclick="emitStartQuiz(this)">Start Quiz</div>
-          <div class="action-btn" onclick="emitEndQuiz(this)">End Quiz</div>
+          <div class="action-btn" onclick="emitPreviousPage(this)"><i class="fa fa-arrow-left"></i></div>
+          <div class="action-btn" onclick="emitNextPage(this)"><i class="fa fa-arrow-right"></i></div>
+          <div class="action-btn" onclick="emitZoomIn(this)"><i class="fa fa-expand"></i></div>
+          <div class="action-btn" onclick="emitZoomOut(this)"><i class="fa fa-compress"></i></div>
         </div>
       </div>
     </div>
-    <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <div id="section-b">
-        <h4>Approvals</h4>
+        <h4><i class="fa-title fa fa-comments"></i>&nbsp;Approvals</h4>
         <div id="unapproved-questions">
 
         </div>
       </div>
     </div>
-    <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <div id="section-c">
-        <h4>Live</h4>
+        <h4><i class="fa-title fa fa-bullhorn"></i>&nbsp;Live</h4>
         <div id="approved-questions">
 
         </div>
       </div>
     </div>
-    <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <div id="section-d">
-        <h4>Quiz Results</h4>
+        <h4><i class="fa-title fa fa-list"></i>&nbsp;Surveys and Quizzes</h4>
         <div id="quiz-results">
 
         </div>
+        <div class="action-btn" onclick="emitToggleInteraction(this)">Show/Hide Results</div>
+        <div class="action-btn" onclick="emitStartQuiz(this, 'abcd')">Start ABCD</div>
+        <div class="action-btn" onclick="emitStartQuiz(this, 'yn')">Start Yes/No</div>
+        <div class="action-btn" onclick="emitStartQuiz(this, 'tf')">Start True/False</div>
+        <div class="action-btn" onclick="emitEndQuiz(this)">End Quiz</div>
       </div>
     </div>
   </div>

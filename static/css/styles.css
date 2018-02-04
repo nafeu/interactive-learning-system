@@ -204,6 +204,13 @@ h4 {
   margin-top: 5px;
 }
 
+.fa-title {
+  padding: 10px;
+  border: 2px solid white;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -311,6 +318,7 @@ h4 {
     bottom: 10px;
     left: 10px;
     width: 100%;
+    font-size: 0.8em;
   }
 }
 

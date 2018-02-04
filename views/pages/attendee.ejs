@@ -84,6 +84,11 @@
     margin-bottom: 20px;
   }
 
+  #user-voting {
+    max-height: 350px;
+    overflow-y: scroll;
+  }
+
   .display-question {
     padding: 10px;
     font-size: 1em;
@@ -127,23 +132,19 @@
     background-color: #EC4849;
   }
 
+  #user-quiz, .top-row, #user-voting {
+    /*border-top: 2px solid rgba(255,255,255,0.25);*/
+  }
+
 </style>
 <body>
   <% include ../partials/page-header %>
   <div class="page-info color-alt-grey"><i class="fa fa-user"></i>&nbsp;<span class="thin-info">User Participation Dashboard</span></div>
   <div class="row">
-    <div id="attendee-quiz" class="col-md-3 col-xs-12">
-      <div id="section-c">
-        <h4>Send A Response</h4>
-        <div id="user-quiz">
-
-        </div>
-      </div>
-    </div>
     <div id="attendee-submissions" class="col-md-5 col-xs-12">
       <div id="section-a">
-        <h4>Submit Comments and Questions</h4>
-        <div class="row">
+        <h4><i class="fa-title fa fa-comment"></i>&nbsp;Submit Comments and Questions</h4>
+        <div class="top-row row">
           <input id="name-field" placeholder="Enter your name (or leave blank to remain anonymous)"></input>
         </div>
         <div class="row">
@@ -156,8 +157,16 @@
     </div>
     <div id="attendee-voting" class="col-md-4 col-xs-12">
       <div id="section-b">
-        <h4>Vote On Questions To Discuss</h4>
+        <h4><i class="fa-title fa fa-comments"></i>&nbsp;Vote On The Discussion</h4>
         <div id="user-voting">
+
+        </div>
+      </div>
+    </div>
+    <div id="attendee-quiz" class="col-md-3 col-xs-12">
+      <div id="section-c">
+        <h4><i class="fa-title fa fa-list"></i>&nbsp;Clicker</h4>
+        <div id="user-quiz">
 
         </div>
       </div>
