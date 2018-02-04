@@ -47,6 +47,9 @@ function renderQuestions(state) {
     unapprovedQuestions.append(createQuestionElement(question, "unapproved-question"));
   })
   approvedQuestions.empty();
+  state.approvedQuestions.sort(function(a, b) {
+    return b.votes - a.votes;
+  })
   state.approvedQuestions.forEach(function(question){
     approvedQuestions.append(createQuestionElement(question, "approved-question"));
   })
@@ -67,7 +70,7 @@ function renderQuiz(state) {
 function createQuestionElement(question, className) {
   var out = $("<div>", {class: className});
   var text = $("<div>", {class: "question-text"}).text(question.text);
-  var votes = $("<div>", {class: "question-votes"}).text(question.votes);
+  var votes = $("<div>", {class: "question-votes"}).text("Votes: " + question.votes);
   var actions = $("<div>", {class: "question-actions"});
 
   out.append(text);

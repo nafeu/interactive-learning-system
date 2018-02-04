@@ -45,6 +45,9 @@ socket.on('update-quiz-state', function(newState){
 
 function renderQuestions(state) {
   userVoting.empty();
+  if (state.approvedQuestions.length == 0) {
+    userVoting.append("<h3>There are no approved questions to vote on.</h3>");
+  }
   state.approvedQuestions.forEach(function(question){
     userVoting.append(createQuestionElement(question, "display-question"));
   })
@@ -56,6 +59,8 @@ function renderQuiz(state) {
     state.labels.forEach(function(label, index){
       userQuiz.append(createQuizElement(label, index));
     });
+  } else {
+    userQuiz.append("<h3>There are no active quizzes running.</h3>");
   }
 }
 

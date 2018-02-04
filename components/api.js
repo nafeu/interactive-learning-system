@@ -34,7 +34,7 @@ module.exports = (io, questionsState, quizState) => {
       case "submission":
         questionsState.unapprovedQuestions.push({
           id: questionsState.getId(),
-          text: req.body.question,
+          text: req.body.data.question,
           votes: 0,
         })
         io.emit("update-questions-state", questionsState);
