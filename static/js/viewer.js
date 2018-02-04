@@ -10,6 +10,7 @@ var publicComments,
     questionsContent,
     modalContainer,
     quizResultsChart,
+    quizStats,
     quizContent;
 
 // PDF.js Configs
@@ -94,6 +95,15 @@ function renderQuiz(state) {
   quizResultsChart.data.datasets[0].data = state.data;
   quizResultsChart.data.labels = state.labels;
   quizResultsChart.update();
+  quizStats.empty();
+  if (state.data.length > 0) {
+    if (state.data.reduce(add, 0) > 0) {
+      quizStats.append("<p>Top result is <span class='bold-info'>" + state.labels[indexOfMax(state.data)] + "</span> with " + state.data[indexOfMax(state.data)] + " vote(s).");
+    }
+    state.data.forEach(function(item, index){
+      quizStats.append("<p>" + state.labels[index] + ": <span class='bold-info'>" + item + "</span></p>");
+    });
+  }
 }
 
 function createQuestionElement(question, className) {
@@ -102,7 +112,6 @@ function createQuestionElement(question, className) {
   var votes = $("<div>", {class: "question-votes"}).text(question.votes);
 
   out.append(text);
-  // out.append(votes);
   return out;
 }
 
@@ -277,6 +286,7 @@ $(document).ready(function(){
   questionsContent = $("#questions-content");
   quizContent = $("#quiz-content");
   quizResultsContext = document.getElementById("quiz-results-chart").getContext('2d');
+  quizStats = $("#quiz-stats");
 
   // DOM Events
   $(window).resize(function(){
