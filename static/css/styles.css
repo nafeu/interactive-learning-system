@@ -125,6 +125,25 @@ h4 {
     outline: none;
 }
 
+#modal-container {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 9;
+}
+
+#modal-content {
+  height: 500px;
+  background-color: white;
+  border-bottom: 50px solid #c8d6e5;
+  z-index: 8;
+  overflow: scroll;
+  margin: 5%;
+  padding: 5%;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

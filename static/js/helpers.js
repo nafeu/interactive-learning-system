@@ -2,6 +2,8 @@
 // Helpers
 // ---------------------------------------------------------------------------
 
+var modalContainer, modalContent;
+
 function remoteCall(payload) {
   return $.post( "/api/remote", payload)
 }
@@ -28,3 +30,26 @@ function stateUpdated(oldState, newState) {
   }
   return true;
 }
+
+function openModal() {
+  modalContainer.show();
+}
+
+function closeModal() {
+  modalContainer.hide();
+}
+
+$(document).ready(function(){
+  // DOM Selectors
+  modalContainer = $("#modal-container");
+  modalContent = $("#modal-content");
+
+  $(window).resize(function(){
+    modalContainer.css('height', $(window).height());
+    modalContent.css('height', $(window).height() * 0.55);
+  });
+
+  modalContainer.css('height', $(window).height());
+  modalContent.css('height', $(window).height() * 0.55);
+  modalContainer.hide();
+});

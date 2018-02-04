@@ -8,6 +8,7 @@ var publicComments,
     questionsArea,
     quizArea,
     questionsContent,
+    modalContainer,
     quizContent;
 
 // PDF.js Configs
