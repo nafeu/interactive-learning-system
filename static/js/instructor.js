@@ -43,13 +43,24 @@ socket.on('update-quiz-state', function(newState){
 
 function renderQuestions(state) {
   unapprovedQuestions.empty();
-  state.unapprovedQuestions.forEach(function(question){
-    unapprovedQuestions.append(createQuestionElement(question, "unapproved-question"));
-  })
+
+  if (state.unapprovedQuestions.length < 1) {
+    unapprovedQuestions.append("<h3>There are no questions or comments awaiting approval.</h3>");
+  } else {
+    state.unapprovedQuestions.forEach(function(question){
+      unapprovedQuestions.append(createQuestionElement(question, "unapproved-question"));
+    })
+  }
+
   approvedQuestions.empty();
-  state.approvedQuestions.sort(function(a, b) {
-    return b.votes - a.votes;
-  })
+
+  if (state.approvedQuestions.length < 1) {
+    approvedQuestions.append("<h3>There are currently no active questions.</h3>");
+  } else {
+    state.approvedQuestions.sort(function(a, b) {
+      return b.votes - a.votes;
+    })
+  }
   state.approvedQuestions.forEach(function(question){
     approvedQuestions.append(createQuestionElement(question, "approved-question"));
   })
