@@ -14,7 +14,7 @@
   }
 
   #quiz-area {
-    background-color: #ff9f43;
+    background-color: #EC4849;
   }
 
   .question-text {
@@ -30,6 +30,11 @@
     z-index: 10;
   }
 
+  #quiz-area h3 {
+    color: white;
+    text-align: center;
+  }
+
 </style>
 <body>
   <div id="content" class="row">
@@ -42,16 +47,13 @@
       </div>
     </div>
     <div id="quiz-area" class="col-md-3 col-xs-12">
+      <h3>Quiz Results</h3>
       <div id="quiz-content">
-
+        <canvas id="quiz-results-chart" width="400" height="400"></canvas>
       </div>
     </div>
   </div>
-  <div id="modal-container">
-    <div id="modal-content">
-
-    </div>
-  </div>
+  <% include ../partials/modal %>
   <script src="js/viewer.js"></script>
 </body>
 </html>

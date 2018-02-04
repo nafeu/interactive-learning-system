@@ -9,6 +9,7 @@ var publicComments,
     quizArea,
     questionsContent,
     modalContainer,
+    quizResultsChart,
     quizContent;
 
 // PDF.js Configs
@@ -90,7 +91,9 @@ function renderQuestions(state) {
 }
 
 function renderQuiz(state) {
-  console.log(state);
+  quizResultsChart.data.datasets[0].data = state.data;
+  quizResultsChart.data.labels = state.labels;
+  quizResultsChart.update();
 }
 
 function createQuestionElement(question, className) {
@@ -197,6 +200,73 @@ PDFJS.getDocument(url).then(function(pdfDoc_) {
   renderPage(pageNum);
 });
 
+function createNewChart(labels) {
+  var newData = [],
+    newBackgroundColor = [],
+    newBorderColor = [];
+
+  labels.forEach(function(label){
+    newData.push();
+    newBackgroundColor.push('rgba(255, 255, 255, 1)');
+    newBorderColor.push('rgba(255, 255, 255, 1)');
+  })
+  return new Chart(quizResultsContext, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: newData,
+        backgroundColor: 'white',
+        borderColor: 'white',
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      legend: {
+        display: false,
+      },
+      tooltips: {
+        enabled: false
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            display: false,
+            beginAtZero: true,
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize: 25,
+            fontColor: 'white',
+          }
+        }],
+      },
+      // animation: {
+      //   duration: 1,
+      //   onComplete: function () {
+      //     var chartInstance = this.chart,
+      //       ctx = chartInstance.ctx;
+      //     ctx.font = Chart.helpers.fontString(
+      //       25,
+      //       Chart.defaults.global.defaultFontStyle,
+      //       Chart.defaults.global.defaultFontFamily);
+      //     ctx.textAlign = 'center';
+      //     ctx.textBaseline = 'bottom';
+      //     ctx.fillStyle = 'white';
+      //     this.data.datasets.forEach(function (dataset, i) {
+      //       var meta = chartInstance.controller.getDatasetMeta(i);
+      //       meta.data.forEach(function (bar, index) {
+      //         var data = dataset.data[index];
+      //         ctx.fillText(data, bar._model.x, bar._model.y - 5);
+      //       });
+      //     });
+      //   }
+      // }
+    },
+  });
+}
+
 $(document).ready(function(){
   console.log("[ viewer.js ] Document ready...");
 
@@ -206,6 +276,7 @@ $(document).ready(function(){
   quizArea = $("#quiz-area");
   questionsContent = $("#questions-content");
   quizContent = $("#quiz-content");
+  quizResultsContext = document.getElementById("quiz-results-chart").getContext('2d');
 
   // DOM Events
   $(window).resize(function(){
@@ -251,6 +322,7 @@ $(document).ready(function(){
     questionsArea.css('height', $(window).height());
     quizArea.css('height', $(window).height());
     quizArea.hide();
+    quizResultsChart = createNewChart([""])
   }
 
   main();

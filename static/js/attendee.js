@@ -37,6 +37,9 @@ socket.on('update-questions-state', function(newState){
 
 socket.on('update-quiz-state', function(newState){
   if (stateUpdated(currQuizState, newState)) {
+    if (currQuizState.active == false && newState.active == true) {
+      window.localStorage.removeItem("attendee-submitted-response");
+    }
     console.log("[ instructor.js ] Updating quiz state --> " + JSON.stringify(newState))
     currQuizState = newState;
     renderQuiz(currQuizState);
@@ -56,9 +59,14 @@ function renderQuestions(state) {
 function renderQuiz(state) {
   userQuiz.empty();
   if (state.active) {
-    state.labels.forEach(function(label, index){
-      userQuiz.append(createQuizElement(label, index));
-    });
+    var label = window.localStorage.getItem("attendee-submitted-response");
+    if (label) {
+      userQuiz.append(createQuizResponseConfirmation(label));
+    } else {
+      state.labels.forEach(function(label, index){
+        userQuiz.append(createQuizElement(label, index));
+      });
+    }
   } else {
     userQuiz.append("<h3>There are no active quizzes running.</h3>");
   }
@@ -136,6 +144,7 @@ function submitResponse(answerIndex) {
   .done(function(data){
     userQuiz.empty();
     userQuiz.append(createQuizResponseConfirmation(data.labels[answerIndex]));
+    window.localStorage.setItem("attendee-submitted-response", data.labels[answerIndex]);
   })
   .fail(function(){
     alert("There was an error submitting your response...");
