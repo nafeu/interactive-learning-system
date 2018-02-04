@@ -144,6 +144,66 @@ h4 {
   padding: 5%;
 }
 
+.page-header {
+  font-size: 2em;
+}
+
+.page-info {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.page-footer {
+  font-size: 0.9em;
+  opacity: 0.75;
+}
+
+.thin-info {
+  font-weight: 100;
+}
+
+.bold-info {
+  font-weight: 700;
+}
+
+.color-yellow {
+  color: #feca57;
+}
+
+.color-green {
+  color: #00d2d3;
+}
+
+.color-grey {
+  color: #c8d6e5;
+}
+
+.color-blue {
+  color: #48dbfb;
+}
+
+.color-dark-grey {
+  color: #576574;
+}
+
+.color-dark-yellow {
+  color: #ff9f43;
+}
+
+.color-red {
+  color: #ff6b6b;
+}
+
+.color-alt-grey {
+  color: #8395a7;
+}
+
+.logo {
+  height: 80px;
+  padding-right: 20px;
+  margin-top: 5px;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -231,6 +291,28 @@ h4 {
    These examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
+
+@media only screen and (max-width: 700px) {
+  .page-header {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  .page-info {
+    text-align: center;
+  }
+  .logo {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .page-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 100%;
+  }
+}
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
