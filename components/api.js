@@ -68,5 +68,27 @@ module.exports = (io, questionsState, quizState) => {
     }
   })
 
+  router.post('/video', (req, res) => {
+    switch (req.body.type) {
+      case "open-video":
+        io.emit(req.body.type, {
+          videoId: req.body.data.videoId,
+          startSeconds: req.body.data.startSeconds
+        })
+        res.status(200).send('OK')
+        break
+      case "pause-play-video":
+        io.emit(req.body.type)
+        res.status(200).send('OK')
+        break
+      case "close-video":
+        io.emit(req.body.type)
+        res.status(200).send('OK')
+        break
+      default:
+        res.status(500).send('Invalid request.')
+    }
+  })
+
   return router
 }

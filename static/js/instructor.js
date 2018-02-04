@@ -155,6 +155,21 @@ function emitEndQuiz(ref) {
   sendQuizInstructorCommand("end-quiz", {}, ref);
 }
 
+function emitOpenVideo(ref) {
+  sendVideoInstructorCommand("open-video", {
+    videoId: "DIJ5jD1jHwo",
+    startSeconds: 0
+  }, ref)
+}
+
+function emitPausePlayVideo(ref) {
+  sendVideoInstructorCommand("pause-play-video", {}, ref);
+}
+
+function emitCloseVideo(ref) {
+  sendVideoInstructorCommand("close-video", {}, ref);
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -181,6 +196,24 @@ function sendQuizInstructorCommand(type, data, ref) {
   element = $(ref);
   action = element.attr("onclick");
   $.post( "/api/quiz", {type: type, data: data}, function(){
+    element
+      .addClass("button-down")
+      .attr("onclick", "");
+  }).done(function(){
+    setTimeout(function(){
+      element
+        .removeClass("button-down")
+        .attr("onclick", action);
+    }, 300)
+  }).fail(function(){
+    alert("An error occured...");
+  });
+}
+
+function sendVideoInstructorCommand(type, data, ref) {
+  element = $(ref);
+  action = element.attr("onclick");
+  $.post( "/api/video", {type: type, data: data}, function(){
     element
       .addClass("button-down")
       .attr("onclick", "");

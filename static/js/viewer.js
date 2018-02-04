@@ -11,7 +11,10 @@ var publicComments,
     modalContainer,
     quizResultsChart,
     quizStats,
-    quizContent;
+    quizContent,
+    videoArea,
+    currQuestionsState = {},
+    currQuizState = {};
 
 // PDF.js Configs
 var pdfDoc = null,
@@ -24,9 +27,12 @@ var pdfDoc = null,
     scaleIncrement = 0.1,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d'),
-    url = '../assets/example.pdf',
-    currQuestionsState = {},
-    currQuizState = {};
+    url = '../assets/example.pdf';
+
+var youtubeVideo,
+    startSeconds = 0,
+    videoState = null,
+    videoDone = false;
 
 // ---------------------------------------------------------------------------
 // Socket Event Handlers
@@ -79,6 +85,24 @@ socket.on('update-quiz-state', function(newState){
 socket.on('toggle-interaction', function(){
   handleToggleInteraction();
 });
+
+socket.on('open-video', function(data){
+  createNewYoutubeVideo(data.videoId, data.startSeconds);
+})
+
+socket.on('pause-play-video', function(){
+  if (youtubeVideo && videoState) {
+    if (videoState == 1) {
+      youtubeVideo.pauseVideo();
+    } else if (videoState == 2) {
+      youtubeVideo.playVideo();
+    }
+  }
+})
+
+socket.on('close-video', function(){
+  removeVideo();
+})
 
 function renderQuestions(state) {
   questionsContent.empty();
@@ -251,29 +275,39 @@ function createNewChart(labels) {
           }
         }],
       },
-      // animation: {
-      //   duration: 1,
-      //   onComplete: function () {
-      //     var chartInstance = this.chart,
-      //       ctx = chartInstance.ctx;
-      //     ctx.font = Chart.helpers.fontString(
-      //       25,
-      //       Chart.defaults.global.defaultFontStyle,
-      //       Chart.defaults.global.defaultFontFamily);
-      //     ctx.textAlign = 'center';
-      //     ctx.textBaseline = 'bottom';
-      //     ctx.fillStyle = 'white';
-      //     this.data.datasets.forEach(function (dataset, i) {
-      //       var meta = chartInstance.controller.getDatasetMeta(i);
-      //       meta.data.forEach(function (bar, index) {
-      //         var data = dataset.data[index];
-      //         ctx.fillText(data, bar._model.x, bar._model.y - 5);
-      //       });
-      //     });
-      //   }
-      // }
     },
   });
+}
+
+function createNewYoutubeVideo(videoId, newStartSeconds) {
+  startSeconds = newStartSeconds;
+  youtubeVideo = new YT.Player('player', {
+    height: $(window).height(),
+    width: $(window).width(),
+    videoId: videoId,
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+  if (parseInt(startSeconds) > 1) {
+    event.target.seekTo(parseInt(startSeconds));
+  }
+}
+
+function onPlayerStateChange(event) {
+  videoState = event.data;
+}
+
+function removeVideo() {
+  videoArea.empty();
+  youtubeVideo = null;
+  videoState = null;
+  videoArea.append($("<div>", {id: "player"}));
 }
 
 $(document).ready(function(){
@@ -287,11 +321,11 @@ $(document).ready(function(){
   quizContent = $("#quiz-content");
   quizResultsContext = document.getElementById("quiz-results-chart").getContext('2d');
   quizStats = $("#quiz-stats");
+  videoArea = $("#video-area");
 
   // DOM Events
   $(window).resize(function(){
-    questionsArea.css('height', $(window).height());
-    quizArea.css('height', $(window).height());
+    updateHeight();
   });
 
   body.keydown(function(event){
@@ -328,9 +362,18 @@ $(document).ready(function(){
     }
   });
 
+  function updateHeight() {
+    var newHeight = $(window).height()
+    questionsArea.css('height', newHeight);
+    quizArea.css('height', newHeight);
+    if (youtubeVideo) {
+      $("#player").css('height', newHeight);
+      $("#player").css('width', $(window).width());
+    }
+  }
+
   function main() {
-    questionsArea.css('height', $(window).height());
-    quizArea.css('height', $(window).height());
+    updateHeight();
     quizArea.hide();
     quizResultsChart = createNewChart([""])
   }
