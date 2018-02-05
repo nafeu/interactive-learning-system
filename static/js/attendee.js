@@ -7,7 +7,9 @@ var attendeeName,
     questionSubmit,
     userVoting,
     userQuiz,
+    ticketModal,
     currQuestionsState = {},
+    currTicketState = {},
     currQuizState = {},
     submittedVotes = [];
 
@@ -43,6 +45,15 @@ socket.on('update-quiz-state', function(newState){
     console.log("[ instructor.js ] Updating quiz state --> " + JSON.stringify(newState))
     currQuizState = newState;
     renderQuiz(currQuizState);
+  }
+});
+
+socket.on('update-ticket-state', function(newState){
+  currTicketState = newState;
+  if (currTicketState.active) {
+    showTicket();
+  } else {
+    hideTicket();
   }
 });
 
@@ -158,6 +169,14 @@ function getName() {
   return "Anonymous";
 }
 
+function showTicket() {
+  ticketModal.show();
+}
+
+function hideTicket() {
+  ticketModal.hide();
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -169,6 +188,7 @@ $(document).ready(function(){
   questionSubmit = $("#question-submit");
   userVoting = $("#user-voting");
   userQuiz = $("#user-quiz");
+  ticketModal = $("#modal-container");
 
   // DOM Events
   attendeeName.change(function(){

@@ -170,6 +170,14 @@ function emitCloseVideo(ref) {
   sendVideoInstructorCommand("close-video", {}, ref);
 }
 
+function emitStartTicket(ref) {
+  sendTicketInstructorCommand("start-ticket", {}, ref);
+}
+
+function emitEndTicket(ref) {
+  sendTicketInstructorCommand("end-ticket", {}, ref);
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -214,6 +222,24 @@ function sendVideoInstructorCommand(type, data, ref) {
   element = $(ref);
   action = element.attr("onclick");
   $.post( "/api/video", {type: type, data: data}, function(){
+    element
+      .addClass("button-down")
+      .attr("onclick", "");
+  }).done(function(){
+    setTimeout(function(){
+      element
+        .removeClass("button-down")
+        .attr("onclick", action);
+    }, 300)
+  }).fail(function(){
+    alert("An error occured...");
+  });
+}
+
+function sendTicketInstructorCommand(type, data, ref) {
+  element = $(ref);
+  action = element.attr("onclick");
+  $.post( "/api/ticket", {type: type, data: data}, function(){
     element
       .addClass("button-down")
       .attr("onclick", "");

@@ -4,7 +4,7 @@
 
 module.exports = {
 
-  "use": (io, questionsState, quizState) => {
+  "use": (io, questionsState, quizState, ticketState) => {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})
@@ -17,6 +17,7 @@ module.exports = {
       socket.on('get-state', () => {
         socket.emit('update-questions-state', questionsState)
         socket.emit('update-quiz-state', quizState)
+        socket.emit('update-ticket-state', ticketState)
       })
 
       socket.on('approve-question', (id) => {

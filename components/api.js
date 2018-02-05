@@ -5,7 +5,7 @@ const router = express.Router()
 // Express API
 // ---------------------------------------------------------------------------
 
-module.exports = (io, questionsState, quizState) => {
+module.exports = (io, questionsState, quizState, ticketState) => {
 
   router.use((req, res, next) => {
     const time = new Date().toTimeString()
@@ -85,6 +85,23 @@ module.exports = (io, questionsState, quizState) => {
         io.emit(req.body.type)
         res.status(200).send('OK')
         break
+      default:
+        res.status(500).send('Invalid request.')
+    }
+  })
+
+  router.post('/ticket', (req, res) => {
+    switch (req.body.type) {
+      case "start-ticket":
+        ticketState.active = true
+        io.emit('update-ticket-state', ticketState)
+        res.status(200).send('OK')
+        break;
+      case "end-ticket":
+        ticketState.active = false
+        io.emit('update-ticket-state', ticketState)
+        res.status(200).send('OK')
+        break;
       default:
         res.status(500).send('Invalid request.')
     }

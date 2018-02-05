@@ -136,6 +136,15 @@
     /*border-top: 2px solid rgba(255,255,255,0.25);*/
   }
 
+  #modal-content {
+    color: black;
+    font-size: 1.5em;
+  }
+
+  #ticket-submit {
+    width: 100px;
+  }
+
 </style>
 <body>
   <% include ../partials/page-header %>
@@ -172,6 +181,7 @@
       </div>
     </div>
   </div>
+  <% include ../partials/modal %>
   <script src="js/attendee.js"></script>
   <% include ../partials/footer %>
 </body>

@@ -20,6 +20,11 @@ const quizState = {
   },
 }
 
+const ticketState = {
+  results: [],
+  active: false,
+}
+
 const express = require('express')
 const path = require('path')
 const app = express()
@@ -27,7 +32,7 @@ const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
-const api = require('./components/api')(io, questionsState, quizState)
+const api = require('./components/api')(io, questionsState, quizState, ticketState)
 const socketEvents = require('./components/socket-events')
 
 // ---------------------------------------------------------------------------
@@ -56,7 +61,7 @@ server.listen(process.env.PORT || serverPort, () => {
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
 io.set('heartbeat interval', 2000)
-socketEvents.use(io, questionsState, quizState)
+socketEvents.use(io, questionsState, quizState, ticketState)
 
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
@@ -75,6 +80,16 @@ app.get('/instructor', function(req, res) {
 app.get('/attendee', function(req, res) {
   res.render('pages/attendee');
 });
+
+app.post('/exit', (req, res) => {
+  ticketState.results.push(req.body);
+  console.log(ticketState);
+  res.render('pages/exit');
+})
+
+app.get('/exit', (req, res) => {
+  res.json(ticketState);
+})
 
 app.use(express.static(path.join(__dirname, 'static')))
 
