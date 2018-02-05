@@ -14,25 +14,34 @@
   }
 
   #quiz-area {
-    background-color: #EC4849;
+    background-color: #c23616;
   }
 
   .question-text {
     color: white;
-    background-color: #58A2FC;
+    background-color: #5f27cd;
     padding: 10px;
-    border-bottom: 5px solid #3488DB;
-    font-size: 1.25em;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+    font-size: 1.1em;
     width: 100%;
+    opacity: 0.4;
+  }
+
+  .display-question:first-child > .question-text {
+    opacity: 1;
+    font-size: 1.75em !important;
   }
 
   #content {
     z-index: 10;
   }
 
-  #quiz-area h3 {
+  #quiz-area h3, #questions-area h3 {
     color: white;
     text-align: center;
+    margin-top: 0;
   }
 
   #quiz-stats {
@@ -54,6 +63,37 @@
     left: 0;
   }
 
+  #interaction-info {
+    text-align: center;
+  }
+
+  #interaction-info img {
+    height: 65px;
+    padding: 10px;
+    padding-bottom: 0px;
+  }
+
+  .info-title {
+    color: white;
+    font-size: 1.25em;
+    padding-top: 0px;
+    padding-bottom: 10px;
+  }
+
+  #questions-area {
+    border-bottom: 15px solid #576574;
+    border-top: 15px solid #576574;
+  }
+
+  #quiz-area {
+    border-bottom: 15px solid #e84118;
+    border-top: 15px solid #e84118;
+  }
+
+  .opacity-50 {
+    opacity: 0.5;
+  }
+
 </style>
 <body>
   <div id="content" class="row">
@@ -61,12 +101,21 @@
       <canvas id="the-canvas"></canvas>
     </div>
     <div id="questions-area" class="col-md-3 col-xs-12">
+      <div id="interaction-info">
+        <img src="assets/logo.svg">
+        <div class="info-title"><span class="thin-info opacity-50">Connect to</span><br><span class="bold-info">www.safiehm.info/attendee</span><br><span class="thin-info opacity-50">to ask questions, comment and participate!</span><br>...</div>
+      </div>
+      <h3>Questions & Comments</h3>
       <div id="questions-content">
 
       </div>
     </div>
     <div id="quiz-area" class="col-md-3 col-xs-12">
-      <h3>Surveys & Quizzes</h3>
+      <div id="interaction-info">
+        <img src="assets/logo.svg">
+        <div class="info-title"><span class="thin-info opacity-50">Connect to</span><br><span class="bold-info">www.safiehm.info/attendee</span><br><span class="thin-info opacity-50">to submit survey and quiz responses!</span><br>...</div>
+      </div>
+      <h3>Survey & Quiz Results</h3>
       <div id="quiz-content">
         <canvas id="quiz-results-chart" width="400" height="400"></canvas>
         <div id="quiz-stats">

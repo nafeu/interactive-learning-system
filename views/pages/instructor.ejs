@@ -148,6 +148,19 @@
       </div>
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12">
+      <div id="section-d">
+        <h4><i class="fa-title fa fa-list"></i>Surveys and Quizzes</h4>
+        <div id="quiz-results">
+
+        </div>
+        <div class="action-btn" onclick="emitToggleInteraction(this)">Show/Hide Results</div>
+        <div class="action-btn" onclick="emitStartQuiz(this, 'abcd')">Start ABCD</div>
+        <div class="action-btn" onclick="emitStartQuiz(this, 'yn')">Start Yes/No</div>
+        <div class="action-btn" onclick="emitStartQuiz(this, 'tf')">Start True/False</div>
+        <div class="action-btn" onclick="emitEndQuiz(this)">End Quiz</div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <div id="section-b">
         <h4><i class="fa-title fa fa-comments"></i>Approvals</h4>
         <div id="unapproved-questions">
@@ -163,22 +176,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-sm-12 col-xs-12">
-      <div id="section-d">
-        <h4><i class="fa-title fa fa-list"></i>Surveys and Quizzes</h4>
-        <div id="quiz-results">
-
-        </div>
-        <div class="action-btn" onclick="emitToggleInteraction(this)">Show/Hide Results</div>
-        <div class="action-btn" onclick="emitStartQuiz(this, 'abcd')">Start ABCD</div>
-        <div class="action-btn" onclick="emitStartQuiz(this, 'yn')">Start Yes/No</div>
-        <div class="action-btn" onclick="emitStartQuiz(this, 'tf')">Start True/False</div>
-        <div class="action-btn" onclick="emitEndQuiz(this)">End Quiz</div>
-      </div>
-    </div>
   </div>
-  <% include ../partials/modal %>
   <script src="js/instructor.js"></script>
-  <% include ../partials/footer %>
 </body>
 </html>
